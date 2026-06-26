@@ -1547,28 +1547,23 @@ function closeModal(e) {
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
 // ── VIEW SWITCHER ──
-function showView(view, month) {
+function showView(view) {
   const isCron = view === 'cronograma';
 
   document.getElementById('view-cronograma').style.display = isCron ? '' : 'none';
   document.getElementById('view-analytics').style.display  = isCron ? 'none' : 'block';
 
-  // sidebar items
-  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.sb-analytics-btn').forEach(el => el.classList.remove('active'));
-  if (isCron) {
-    document.querySelectorAll('.sb-item').forEach(el => {
-      if (el.textContent.toLowerCase().includes(month)) el.classList.add('active');
-    });
-  } else {
-    document.querySelector('.sb-analytics-btn').classList.add('active');
-  }
+  // sidebar icon buttons
+  const sbCron = document.getElementById('sb-btn-cron');
+  const sbAn   = document.getElementById('sb-btn-analytics');
+  if (sbCron) { sbCron.classList.toggle('active', isCron); sbCron.classList.toggle('active-yellow', false); }
+  if (sbAn)   { sbAn.classList.toggle('active-yellow', !isCron); sbAn.classList.toggle('active', false); }
 
-  // bottom nav
+  // bottom nav mobile
   const btnCron = document.getElementById('btn-cron');
   const btnAn   = document.getElementById('btn-analytics');
-  if (btnCron)  btnCron.classList.toggle('active', isCron);
-  if (btnAn)    btnAn.classList.toggle('active', !isCron);
+  if (btnCron) btnCron.classList.toggle('active', isCron);
+  if (btnAn)   btnAn.classList.toggle('active', !isCron);
 
   // badge
   document.getElementById('top-badge-label').textContent =
