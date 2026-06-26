@@ -1609,6 +1609,25 @@ function closeModal(e) {
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
+// ── MONTH DROPDOWN ──
+function toggleMonthDropdown() {
+  const dd = document.getElementById('sb-month-dropdown');
+  dd.classList.toggle('open');
+}
+function selectMonth(month, label) {
+  document.querySelectorAll('.sb-month-item').forEach(el => el.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('sb-month-dropdown').classList.remove('open');
+  showView('cronograma');
+  document.getElementById('top-badge-label').textContent = 'Cronograma · ' + label;
+}
+document.addEventListener('click', e => {
+  const wrap = document.getElementById('sb-cron-wrap');
+  if (wrap && !wrap.contains(e.target)) {
+    document.getElementById('sb-month-dropdown').classList.remove('open');
+  }
+});
+
 // ── VIEW SWITCHER ──
 function showView(view) {
   const isCron = view === 'cronograma';
