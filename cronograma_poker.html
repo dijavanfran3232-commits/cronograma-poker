@@ -150,6 +150,56 @@ body {
 .sb-profile { display: none; }
 .sb-ig-badge { display: none; }
 
+/* ── MONTH DROPDOWN ── */
+.sb-dropdown-wrap {
+  position: relative;
+}
+.sb-month-dropdown {
+  display: none;
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 0;
+  background: #111f2b;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  padding: 10px 8px;
+  min-width: 190px;
+  box-shadow: 0 20px 48px rgba(0,0,0,.5);
+  z-index: 9999;
+  animation: dropIn .15s cubic-bezier(.4,0,.2,1);
+}
+@keyframes dropIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.sb-month-dropdown.open { display: block; }
+
+.sb-month-title {
+  font-size: 9px; font-weight: 800;
+  color: rgba(255,255,255,.25);
+  text-transform: uppercase; letter-spacing: .1em;
+  padding: 4px 10px 8px;
+}
+.sb-month-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 12px;
+  border-radius: 9px;
+  font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,.7);
+  cursor: pointer;
+  transition: all .12s;
+  white-space: nowrap;
+}
+.sb-month-item:hover:not(.locked) { background: rgba(255,255,255,.07); color: #fff; }
+.sb-month-item.active { background: rgba(23,68,212,.25); color: #fff; }
+.sb-month-item.locked { color: rgba(255,255,255,.25); cursor: default; }
+.sb-month-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--blue); flex-shrink: 0;
+}
+.sb-month-dot.locked { background: rgba(255,255,255,.15); }
+.sb-month-lock { margin-left: auto; font-size: 10px; opacity: .4; }
+
 /* ── MAIN CONTENT ── */
 .main-content {
   flex: 1;
