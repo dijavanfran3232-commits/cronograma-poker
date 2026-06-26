@@ -843,10 +843,32 @@ slides.forEach((s, i) => {
   dots.appendChild(dot);
 });
 
+let animating = false;
+
 function go(i) {
-  document.getElementById(slides[cur].id).classList.remove('active');
-  cur = ((i % slides.length) + slides.length) % slides.length;
-  document.getElementById(slides[cur].id).classList.add('active');
+  if (animating) return;
+  const next = ((i % slides.length) + slides.length) % slides.length;
+  if (next === cur) return;
+
+  animating = true;
+  const dir = next > cur ? 1 : -1;
+  const outClass = dir > 0 ? 'flip-out-left' : 'flip-out-right';
+  const inClass  = dir > 0 ? 'flip-in-right' : 'flip-in-left';
+
+  const outEl = document.getElementById(slides[cur].id);
+  const inEl  = document.getElementById(slides[next].id);
+
+  outEl.classList.add(outClass);
+  outEl.addEventListener('animationend', () => {
+    outEl.classList.remove('active', outClass);
+    inEl.classList.add('active', inClass);
+    inEl.addEventListener('animationend', () => {
+      inEl.classList.remove(inClass);
+      animating = false;
+    }, { once: true });
+  }, { once: true });
+
+  cur = next;
   nav.querySelectorAll('button').forEach((b, j) => b.classList.toggle('active', j === cur));
   dots.querySelectorAll('.cdot').forEach((d, j) => d.classList.toggle('active', j === cur));
   clabel.textContent = `${cur + 1} / ${slides.length}`;
