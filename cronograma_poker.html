@@ -575,6 +575,41 @@ body {
   letter-spacing: .04em;
 }
 @media (max-width: 639px) { .swipe-hint { display: block; } }
+
+/* ── MOBILE FIXES ── */
+@media (max-width: 639px) {
+  body { padding: 16px 12px 40px; }
+
+  .top-bar { margin-bottom: 12px; }
+
+  /* semanas: coluna única empilhada */
+  .wk-slide .slide-inner { grid-template-columns: 1fr; }
+  .wk-left { min-height: 180px; padding: 20px; flex-direction: row; align-items: flex-end; justify-content: space-between; }
+  .wk-suit-bg { font-size: 100px; bottom: -10px; left: -5px; }
+  .wk-num { font-size: 52px; }
+
+  /* cards de post: padding maior para toque */
+  .wcard { padding: 16px 14px; gap: 10px; }
+  .wcard-roteiro-btn { padding: 8px 16px; font-size: 12px; min-height: 36px; }
+
+  /* próximos passos */
+  #slide-passos .slide-inner { grid-template-columns: 1fr; }
+  .ps-left { min-height: 200px; }
+
+  /* modal ocupa mais tela no celular */
+  .modal { max-height: 90vh; border-radius: 16px; }
+  .modal-overlay { padding: 12px; align-items: flex-end; }
+  .modal-header { padding: 20px 18px 14px; border-radius: 16px 16px 0 0; }
+  .modal-body { padding: 16px 18px 24px; }
+
+  /* nav scroll horizontal */
+  .nav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav button { flex-shrink: 0; }
+
+  /* setas maiores para toque */
+  .arr-btn { width: 44px; height: 44px; font-size: 18px; }
+}
 </style>
 </head>
 <body>
