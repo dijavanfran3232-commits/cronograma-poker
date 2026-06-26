@@ -126,10 +126,13 @@ body {
 .slide.flip-out-right { display: block; animation: flipOutRight .45s cubic-bezier(.4,0,.2,1) forwards; }
 
 @media (min-width: 640px) {
-  .slide-inner { aspect-ratio: 16 / 9; }
+  .slide-inner {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+  }
 }
 @media (max-width: 639px) {
-  .slide-inner { min-height: 560px; }
+  .slide-inner { min-height: 100vw; }
 }
 
 /* ══════════════════════════════
