@@ -103,88 +103,70 @@ body {
    SLIDE: CAPA
 ══════════════════════════════ */
 #slide-capa .slide-inner {
-  background: var(--dark);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
-  position: relative;
-}
-@media (max-width: 639px) {
-  #slide-capa .slide-inner { grid-template-columns: 1fr; }
-}
-
-.capa-left {
   background: var(--blue);
-  padding: clamp(28px,6%,64px) clamp(24px,6%,60px);
-  display: flex; flex-direction: column; justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: clamp(28px,6%,64px) clamp(24px,7%,80px);
   position: relative; overflow: hidden;
 }
-.capa-left::after {
+#slide-capa .slide-inner::before {
   content: '♠';
   position: absolute;
-  font-size: clamp(160px, 22vw, 280px);
+  font-size: clamp(200px, 30vw, 400px);
   font-weight: 900;
-  color: rgba(255,255,255,.07);
-  bottom: -40px; right: -20px;
+  color: rgba(255,255,255,.05);
+  bottom: -60px; right: -20px;
   line-height: 1;
+  pointer-events: none;
 }
+
 .capa-eyebrow {
   display: flex; align-items: center; gap: 8px;
   font-size: clamp(10px,1vw,12px); font-weight: 700;
-  color: rgba(255,255,255,.55);
+  color: rgba(255,255,255,.5);
   text-transform: uppercase; letter-spacing: .1em;
   position: relative; z-index: 1;
 }
 .capa-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
 .capa-title {
-  font-size: clamp(48px,8vw,96px);
+  font-size: clamp(52px,9vw,110px);
   font-weight: 900; color: #fff;
   line-height: .88; letter-spacing: -.04em;
   position: relative; z-index: 1;
 }
 .capa-title em { color: var(--yellow); font-style: italic; }
+
+.capa-highlights {
+  display: flex; gap: clamp(12px,2vw,24px);
+  flex-wrap: wrap;
+  position: relative; z-index: 1;
+}
+.capa-highlight {
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 14px;
+  padding: clamp(12px,2%,18px) clamp(16px,2.5%,24px);
+  flex: 1; min-width: 160px;
+}
+.capa-highlight-label {
+  font-size: clamp(9px,.9vw,11px); font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: rgba(255,255,255,.45);
+  margin-bottom: 6px;
+}
+.capa-highlight-text {
+  font-size: clamp(13px,1.4vw,17px);
+  font-weight: 800; color: #fff;
+  line-height: 1.25; letter-spacing: -.02em;
+}
+
 .capa-stats {
   display: flex; gap: clamp(16px,3vw,32px);
   position: relative; z-index: 1;
 }
 .stat-n { font-size: clamp(26px,3.5vw,42px); font-weight: 900; line-height: 1; color: #fff; }
 .stat-l { font-size: clamp(9px,1vw,11px); color: rgba(255,255,255,.45); font-weight: 600; text-transform: uppercase; letter-spacing: .08em; margin-top: 2px; }
-
-.capa-right {
-  background: var(--cream);
-  padding: clamp(24px,5%,52px) clamp(24px,5%,52px);
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  gap: 12px;
-}
-.capa-card {
-  border-radius: 14px;
-  padding: clamp(16px,3%,24px);
-  display: flex; flex-direction: column; justify-content: space-between;
-}
-.capa-card:nth-child(1) { background: var(--lavender); }
-.capa-card:nth-child(2) { background: var(--dark); }
-.capa-card-label {
-  font-size: clamp(9px,.9vw,11px); font-weight: 800;
-  text-transform: uppercase; letter-spacing: .1em;
-  opacity: .55;
-}
-.capa-card:nth-child(1) .capa-card-label { color: var(--dark); }
-.capa-card:nth-child(2) .capa-card-label { color: rgba(255,255,255,.5); }
-.capa-card-text {
-  font-size: clamp(14px,1.6vw,20px);
-  font-weight: 800; line-height: 1.2;
-  letter-spacing: -.02em;
-}
-.capa-card:nth-child(1) .capa-card-text { color: var(--dark); }
-.capa-card:nth-child(2) .capa-card-text { color: #fff; }
-.capa-suits {
-  font-size: clamp(18px,2vw,26px);
-  letter-spacing: .3em;
-  opacity: .2;
-}
-.capa-card:nth-child(1) .capa-suits { color: var(--dark); }
-.capa-card:nth-child(2) .capa-suits { color: #fff; }
 
 /* ══════════════════════════════
    SLIDE: VISÃO GERAL
