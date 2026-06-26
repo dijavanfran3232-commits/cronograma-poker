@@ -884,6 +884,33 @@ body {
 
 </div><!-- /stage -->
 
+<!-- ── MODAL ROTEIRO ── -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-info">
+        <div class="modal-header-date" id="modal-date"></div>
+        <div class="modal-header-title" id="modal-title"></div>
+      </div>
+      <button class="modal-close" onclick="closeModalDirect()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-section">
+        <div class="modal-section-label">🎬 Gancho</div>
+        <div class="modal-section-text" id="modal-gancho"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">📋 Desenvolvimento</div>
+        <div class="modal-section-text" id="modal-dev"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-label">🎯 CTA</div>
+        <div class="modal-section-text" id="modal-cta"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="counter-bar">
   <div class="counter-dots" id="dots"></div>
   <div class="counter-label" id="clabel">1 / 7</div>
