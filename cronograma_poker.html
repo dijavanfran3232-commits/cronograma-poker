@@ -1050,9 +1050,9 @@ go(0);
 function openModal(date, title, gancho, dev, cta) {
   document.getElementById('modal-date').textContent = date;
   document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-gancho').textContent = gancho;
-  document.getElementById('modal-dev').textContent = dev;
-  document.getElementById('modal-cta').textContent = cta;
+  document.getElementById('modal-gancho').innerHTML = gancho.replace(/\n\n/g, '<br><br>');
+  document.getElementById('modal-dev').innerHTML = dev.replace(/\n\n/g, '<br><br>');
+  document.getElementById('modal-cta').innerHTML = cta.replace(/\n\n/g, '<br><br>');
   document.getElementById('modal-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
