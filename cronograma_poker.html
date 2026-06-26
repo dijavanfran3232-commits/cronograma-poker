@@ -1553,6 +1553,35 @@ function closeModal(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+// ── VIEW SWITCHER ──
+function showView(view, month) {
+  const isCron = view === 'cronograma';
+
+  document.getElementById('view-cronograma').style.display = isCron ? '' : 'none';
+  document.getElementById('view-analytics').style.display  = isCron ? 'none' : 'block';
+
+  // sidebar items
+  document.querySelectorAll('.sb-item').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.sb-analytics-btn').forEach(el => el.classList.remove('active'));
+  if (isCron) {
+    document.querySelectorAll('.sb-item').forEach(el => {
+      if (el.textContent.toLowerCase().includes(month)) el.classList.add('active');
+    });
+  } else {
+    document.querySelector('.sb-analytics-btn').classList.add('active');
+  }
+
+  // bottom nav
+  const btnCron = document.getElementById('btn-cron');
+  const btnAn   = document.getElementById('btn-analytics');
+  if (btnCron)  btnCron.classList.toggle('active', isCron);
+  if (btnAn)    btnAn.classList.toggle('active', !isCron);
+
+  // badge
+  document.getElementById('top-badge-label').textContent =
+    isCron ? 'Cronograma · Julho 2026' : 'Analytics · Julho 2026';
+}
 </script>
 </body>
 </html>
