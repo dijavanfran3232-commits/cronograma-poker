@@ -1503,15 +1503,41 @@ body {
 
 <!-- ── BOTTOM NAV MOBILE ── -->
 <nav class="sb-bottom">
-  <button class="sb-bottom-btn active" id="btn-cron" onclick="showView('cronograma','julho')">
-    <span class="sb-bottom-icon">◈</span>
+  <button class="sb-bottom-btn active" id="btn-cron" onclick="toggleMobileMonths()">
+    <span class="sb-bottom-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </span>
     Cronograma
   </button>
   <button class="sb-bottom-btn" id="btn-analytics" onclick="showView('analytics')">
-    <span class="sb-bottom-icon">&#9654;</span>
+    <span class="sb-bottom-icon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    </span>
     Analytics
   </button>
 </nav>
+
+<!-- Mobile month picker -->
+<div class="mobile-month-overlay" id="mobile-month-overlay" onclick="closeMobileMonths()"></div>
+<div class="mobile-month-sheet" id="mobile-month-sheet">
+  <div class="mobile-month-handle"></div>
+  <div class="sb-month-title" style="padding:4px 4px 10px">Escolher mês</div>
+  <div class="sb-month-item active" onclick="selectMonthMobile('julho','Julho 2026')">
+    <span class="sb-month-dot"></span>Julho 2026
+  </div>
+  <div class="sb-month-item locked">
+    <span class="sb-month-dot locked"></span>Agosto 2026
+    <span class="sb-month-lock">&#128274;</span>
+  </div>
+  <div class="sb-month-item locked">
+    <span class="sb-month-dot locked"></span>Setembro 2026
+    <span class="sb-month-lock">&#128274;</span>
+  </div>
+  <div class="sb-month-item locked">
+    <span class="sb-month-dot locked"></span>Outubro 2026
+    <span class="sb-month-lock">&#128274;</span>
+  </div>
+</div>
 
 <script>
 const slides = [
