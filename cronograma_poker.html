@@ -918,17 +918,30 @@ body {
 <aside class="sidebar">
   <div class="sb-logo">♠</div>
 
-  <button class="sb-icon-btn active" id="sb-btn-cron" data-tip="Cronograma · Jul 2026" onclick="showView('cronograma','julho')">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-  </button>
-
-  <button class="sb-icon-btn" data-tip="Agosto 2026 (em breve)" style="opacity:.3;cursor:default">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-  </button>
-
-  <button class="sb-icon-btn" data-tip="Setembro 2026 (em breve)" style="opacity:.3;cursor:default">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-  </button>
+  <!-- Cronograma dropdown -->
+  <div class="sb-dropdown-wrap" id="sb-cron-wrap">
+    <button class="sb-icon-btn active" id="sb-btn-cron" data-tip="Cronogramas" onclick="toggleMonthDropdown()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </button>
+    <div class="sb-month-dropdown" id="sb-month-dropdown">
+      <div class="sb-month-title">Cronogramas</div>
+      <div class="sb-month-item active" onclick="selectMonth('julho','Julho 2026')">
+        <span class="sb-month-dot"></span>Julho 2026
+      </div>
+      <div class="sb-month-item locked" title="Em breve">
+        <span class="sb-month-dot locked"></span>Agosto 2026
+        <span class="sb-month-lock">&#128274;</span>
+      </div>
+      <div class="sb-month-item locked" title="Em breve">
+        <span class="sb-month-dot locked"></span>Setembro 2026
+        <span class="sb-month-lock">&#128274;</span>
+      </div>
+      <div class="sb-month-item locked" title="Em breve">
+        <span class="sb-month-dot locked"></span>Outubro 2026
+        <span class="sb-month-lock">&#128274;</span>
+      </div>
+    </div>
+  </div>
 
   <div class="sb-sep"></div>
 
