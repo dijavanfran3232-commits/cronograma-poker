@@ -28,117 +28,127 @@ body {
 
 /* ── SIDEBAR ── */
 .sidebar {
-  width: 240px;
+  width: 64px;
   flex-shrink: 0;
-  background: #0e1b23;
-  border-right: 1px solid rgba(255,255,255,.07);
+  background: #0b1520;
+  border-right: 1px solid rgba(255,255,255,.06);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding: 24px 0 32px;
+  align-items: center;
+  padding: 20px 0;
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow-y: auto;
+  gap: 4px;
 }
-.sb-brand {
-  display: flex; align-items: center; gap: 10px;
-  padding: 0 20px 24px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  margin-bottom: 8px;
-}
-.sb-brand-icon {
+
+.sb-logo {
   width: 36px; height: 36px;
   background: var(--yellow);
-  border-radius: 9px;
+  border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
   font-size: 18px; font-weight: 900; color: var(--dark);
+  margin-bottom: 20px;
   flex-shrink: 0;
 }
-.sb-brand-name { font-weight: 900; font-size: 14px; letter-spacing: -.02em; line-height: 1.15; color: var(--cream); }
-.sb-brand-sub { font-size: 10px; color: rgba(255,255,255,.3); font-weight: 600; margin-top: 1px; }
 
-.sb-profile {
-  padding: 16px 20px;
-  margin-bottom: 8px;
+.sb-icon-btn {
+  position: relative;
+  width: 40px; height: 40px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px;
+  color: rgba(255,255,255,.28);
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+  border: none; background: transparent;
 }
-.sb-profile-card {
-  background: rgba(255,255,255,.05);
-  border: 1px solid rgba(255,255,255,.08);
-  border-radius: 14px;
-  padding: 14px;
-  display: flex; flex-direction: column; gap: 8px;
+.sb-icon-btn:hover {
+  background: rgba(255,255,255,.06);
+  color: rgba(255,255,255,.7);
+}
+.sb-icon-btn.active {
+  background: rgba(23,68,212,.3);
+  color: #fff;
+}
+.sb-icon-btn.active-yellow {
+  background: rgba(255,191,67,.2);
+  color: var(--yellow);
+}
+
+/* tooltip */
+.sb-icon-btn::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%; transform: translateY(-50%);
+  background: #1a2d3a;
+  border: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  white-space: nowrap;
+  padding: 5px 10px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s;
+  z-index: 999;
+  font-family: var(--f);
+  letter-spacing: .02em;
+}
+.sb-icon-btn:hover::after { opacity: 1; }
+
+.sb-sep {
+  width: 24px; height: 1px;
+  background: rgba(255,255,255,.07);
+  margin: 8px 0;
+}
+
+/* avatar at bottom */
+.sb-avatar-wrap {
+  margin-top: auto;
+  position: relative;
 }
 .sb-avatar {
-  width: 44px; height: 44px;
+  width: 34px; height: 34px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--blue), var(--lavender));
   display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 900; color: #fff;
-}
-.sb-ig-name { font-size: 13px; font-weight: 800; color: #fff; letter-spacing: -.01em; }
-.sb-ig-handle { font-size: 11px; color: rgba(255,255,255,.4); font-weight: 600; }
-.sb-ig-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  background: rgba(195,133,255,.15);
-  border: 1px solid rgba(195,133,255,.25);
-  border-radius: 999px;
-  padding: 3px 10px;
-  font-size: 9px; font-weight: 800;
-  color: var(--lavender);
-  letter-spacing: .06em; text-transform: uppercase;
-  width: fit-content;
-}
-
-.sb-section-label {
-  padding: 0 20px 8px;
-  font-size: 9px; font-weight: 800;
-  color: rgba(255,255,255,.25);
-  text-transform: uppercase; letter-spacing: .1em;
-}
-.sb-item {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 20px;
-  font-size: 13px; font-weight: 700;
-  color: rgba(255,255,255,.45);
+  font-size: 14px; font-weight: 900; color: #fff;
   cursor: pointer;
-  transition: all .15s;
-  border-left: 3px solid transparent;
-  user-select: none;
+  border: 2px solid rgba(255,255,255,.12);
+  transition: border-color .15s;
 }
-.sb-item:hover { color: #fff; background: rgba(255,255,255,.04); }
-.sb-item.active { color: #fff; background: rgba(23,68,212,.18); border-left-color: var(--blue); }
-.sb-item-icon {
-  width: 28px; height: 28px;
+.sb-avatar:hover { border-color: rgba(255,255,255,.35); }
+.sb-avatar::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%; transform: translateY(-50%);
+  background: #1a2d3a;
+  border: 1px solid rgba(255,255,255,.1);
+  color: #fff;
+  font-size: 11px; font-weight: 700;
+  white-space: nowrap;
+  padding: 5px 10px;
   border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 13px;
-  flex-shrink: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .15s;
+  z-index: 999;
+  font-family: var(--f);
 }
-.sb-item.active .sb-item-icon { background: var(--blue); }
-.sb-item:not(.active) .sb-item-icon { background: rgba(255,255,255,.06); }
-.sb-item-lock {
-  margin-left: auto;
-  font-size: 10px;
-  opacity: .3;
-}
+.sb-avatar:hover::after { opacity: 1; }
 
-.sb-divider { height: 1px; background: rgba(255,255,255,.06); margin: 12px 20px; }
-
-.sb-analytics-btn {
-  display: flex; align-items: center; gap: 10px;
-  padding: 10px 20px;
-  font-size: 13px; font-weight: 700;
-  color: rgba(255,255,255,.45);
-  cursor: pointer;
-  transition: all .15s;
-  border-left: 3px solid transparent;
-  user-select: none;
-}
-.sb-analytics-btn:hover { color: #fff; background: rgba(255,255,255,.04); }
-.sb-analytics-btn.active { color: #fff; background: rgba(255,191,67,.12); border-left-color: var(--yellow); }
-.sb-analytics-btn.active .sb-item-icon { background: var(--yellow); color: var(--dark); }
-.sb-analytics-btn:not(.active) .sb-item-icon { background: rgba(255,255,255,.06); }
+.sb-divider { display: none; }
+.sb-section-label { display: none; }
+.sb-item { display: none; }
+.sb-analytics-btn { display: none; }
+.sb-brand { display: none; }
+.sb-profile { display: none; }
+.sb-ig-badge { display: none; }
 
 /* ── MAIN CONTENT ── */
 .main-content {
