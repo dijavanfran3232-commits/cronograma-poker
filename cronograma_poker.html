@@ -1010,6 +1010,25 @@ stage.addEventListener('touchend', e => {
 }, { passive: true });
 
 go(0);
+
+// ── MODAL ──
+function openModal(date, title, gancho, dev, cta) {
+  document.getElementById('modal-date').textContent = date;
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-gancho').textContent = gancho;
+  document.getElementById('modal-dev').textContent = dev;
+  document.getElementById('modal-cta').textContent = cta;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModalDirect() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModal(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModalDirect();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 </script>
 </body>
 </html>
