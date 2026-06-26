@@ -904,6 +904,54 @@ body {
 </head>
 <body>
 
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-icon">♠</div>
+    <div>
+      <div class="sb-brand-name">Poker Club</div>
+      <div class="sb-brand-sub">Elas na Mesa</div>
+    </div>
+  </div>
+
+  <div class="sb-profile">
+    <div class="sb-profile-card">
+      <div class="sb-avatar">R</div>
+      <div>
+        <div class="sb-ig-name">Roberta Oliveira</div>
+        <div class="sb-ig-handle">@robertatgoliveira</div>
+      </div>
+      <div class="sb-ig-badge">▶ Instagram</div>
+    </div>
+  </div>
+
+  <div class="sb-section-label">Cronogramas</div>
+  <div class="sb-item active" onclick="showView('cronograma','julho')">
+    <div class="sb-item-icon">◈</div>
+    Julho 2026
+  </div>
+  <div class="sb-item" onclick="showView('cronograma','agosto')" style="opacity:.5;pointer-events:none;">
+    <div class="sb-item-icon">◈</div>
+    Agosto 2026
+    <span class="sb-item-lock">&#128274;</span>
+  </div>
+  <div class="sb-item" onclick="showView('cronograma','setembro')" style="opacity:.5;pointer-events:none;">
+    <div class="sb-item-icon">◈</div>
+    Setembro 2026
+    <span class="sb-item-lock">&#128274;</span>
+  </div>
+
+  <div class="sb-divider"></div>
+  <div class="sb-section-label">Relatórios</div>
+  <div class="sb-analytics-btn" onclick="showView('analytics')">
+    <div class="sb-item-icon">&#9654;</div>
+    Analytics
+  </div>
+</aside>
+
+<!-- ── MAIN CONTENT ── -->
+<div class="main-content">
+
 <div class="top-bar">
   <div class="logo">
     <div class="logo-icon">♠</div>
@@ -912,9 +960,11 @@ body {
       <div style="color:rgba(255,255,255,.35);font-weight:600;font-size:11px;letter-spacing:.04em;">Elas na Mesa</div>
     </div>
   </div>
-  <div class="top-badge">Cronograma · Julho 2026</div>
+  <div class="top-badge" id="top-badge-label">Cronograma · Julho 2026</div>
 </div>
 
+<!-- ── CRONOGRAMA VIEW ── -->
+<div id="view-cronograma">
 <div class="nav" id="nav"></div>
 
 <div class="stage">
