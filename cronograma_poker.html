@@ -323,6 +323,33 @@ body {
   .main-content { padding-bottom: 80px; }
   .an-kpis { grid-template-columns: repeat(2, 1fr); }
   .an-weeks { grid-template-columns: 1fr; }
+
+  /* mobile month sheet */
+  .mobile-month-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.5);
+    z-index: 500;
+  }
+  .mobile-month-overlay.open { display: block; }
+  .mobile-month-sheet {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #111f2b;
+    border-top: 1px solid rgba(255,255,255,.1);
+    border-radius: 20px 20px 0 0;
+    padding: 12px 20px calc(80px + env(safe-area-inset-bottom)) 20px;
+    z-index: 501;
+    transform: translateY(100%);
+    transition: transform .25s cubic-bezier(.4,0,.2,1);
+  }
+  .mobile-month-sheet.open { transform: translateY(0); }
+  .mobile-month-handle {
+    width: 36px; height: 4px;
+    background: rgba(255,255,255,.15);
+    border-radius: 999px;
+    margin: 0 auto 16px;
+  }
 }
 @media (min-width: 861px) {
   .sb-bottom { display: none; }
