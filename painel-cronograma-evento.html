@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cronograma do Evento — Portal do Aluno</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #111113;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: #fff;
+    min-height: 100vh;
+    padding-bottom: 4rem;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -120px; left: -80px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(200,30,30,0.18) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: 0; right: -100px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(165,2,22,0.10) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glass {
+    background: linear-gradient(145deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.04) 50%, rgba(255,255,255,0.02) 100%);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.11);
+    border-top-color: rgba(255,255,255,0.22);
+    border-left-color: rgba(255,255,255,0.16);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.14), inset 0 -1px 0 rgba(0,0,0,0.2), 0 8px 32px rgba(0,0,0,0.4);
+  }
+  .glass-red {
+    background: linear-gradient(145deg, rgba(165,2,22,0.22) 0%, rgba(165,2,22,0.10) 50%, rgba(140,10,10,0.06) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(220,60,60,0.22);
+    border-top-color: rgba(255,100,100,0.32);
+    box-shadow: inset 0 1px 0 rgba(255,120,120,0.18), inset 0 -1px 0 rgba(100,0,0,0.3), 0 12px 40px rgba(165,2,22,0.25), 0 4px 16px rgba(0,0,0,0.5);
+  }
+
+  /* ─── NAV ─── */
+  .glass-nav {
+    background: linear-gradient(180deg, rgba(20,20,22,0.92) 0%, rgba(14,14,16,0.80) 100%);
+    backdrop-filter: blur(28px) saturate(160%);
+    -webkit-backdrop-filter: blur(28px) saturate(160%);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.05), 0 4px 24px rgba(0,0,0,0.4);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+  }
+  .nav-logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 15px; letter-spacing: -0.02em; }
+  .nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: #F51627; box-shadow: 0 0 10px rgba(245,22,39,0.8); }
+  .nav-crumb { font-size: 12px; color: rgba(255,255,255,0.4); margin-left: auto; }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 2.2rem 1.5rem 0; position: relative; z-index: 1; }
+
+  .page-head { margin-bottom: 1.8rem; }
+  .eyebrow { display:flex; align-items:center; gap:8px; font-size:11px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:#ff8a8a; margin-bottom: 8px; }
+  .eyebrow .dot { width:6px; height:6px; border-radius:50%; background:#F51627; box-shadow:0 0 8px rgba(245,22,39,.9); }
+  h1 { font-size: clamp(24px, 4vw, 34px); font-weight: 900; letter-spacing: -0.03em; }
+  .page-sub { color: rgba(255,255,255,0.45); font-size: 14px; margin-top: 6px; }
+
+  /* ─── GROUP SELECTOR ─── */
+  .group-selector { display: flex; gap: 10px; margin-bottom: 1.6rem; flex-wrap: wrap; }
+  .group-btn {
+    flex: 1; min-width: 130px;
+    border-radius: 16px;
+    padding: 16px 18px;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.03);
+    transition: all .18s;
+    text-align: left;
+  }
+  .group-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
+  .group-btn.active {
+    background: linear-gradient(145deg, rgba(245,22,39,0.28) 0%, rgba(165,2,22,0.14) 100%);
+    border-color: rgba(245,60,60,0.5);
+    box-shadow: 0 8px 24px rgba(165,2,22,0.3);
+  }
+  .group-letter { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .group-label { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
+  .group-btn.active .group-label { color: rgba(255,180,180,0.8); }
+
+  /* ─── LEGEND ─── */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.8rem; }
+  .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 600; }
+  .legend-swatch { width: 11px; height: 11px; border-radius: 4px; flex-shrink: 0; }
+  .sw-workshop { background: #4d8dff; }
+  .sw-simulado { background: #F51627; }
+  .sw-livre { background: rgba(255,255,255,0.18); }
+  .sw-almoco { background: #ffb445; }
+
+  /* ─── DAY CARD ─── */
+  .day-card { border-radius: 20px; padding: 22px 22px 8px; margin-bottom: 20px; }
+  .day-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 6px; }
+  .day-title { font-size: 19px; font-weight: 900; letter-spacing: -0.01em; }
+  .day-date { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 600; }
+  .day-blocks-tag { font-size: 11px; font-weight: 700; color: #ff9a9a; background: rgba(245,22,39,0.14); border: 1px solid rgba(245,60,60,0.25); padding: 3px 10px; border-radius: 999px; }
+
+  .timeline { display: flex; flex-direction: column; gap: 10px; padding-bottom: 14px; }
+  .item {
+    display: flex; gap: 14px;
+    border-radius: 14px;
+    padding: 14px 16px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.02);
+  }
+  .item.workshop { border-left: 3px solid #4d8dff; }
+  .item.simulado { border-left: 3px solid #F51627; background: rgba(245,22,39,0.06); }
+  .item.livre { border-left: 3px solid rgba(255,255,255,0.18); opacity: .55; }
+  .item.almoco { border-left: 3px solid #ffb445; background: rgba(255,180,69,0.06); }
+
+  .item-time { width: 108px; flex-shrink: 0; font-size: 13px; font-weight: 800; color: rgba(255,255,255,0.85); font-variant-numeric: tabular-nums; }
+  .item-body { flex: 1; }
+  .item-title { font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+  .item-title i { font-size: 15px; }
+  .item.workshop .item-title { color: #8fb6ff; }
+  .item.simulado .item-title { color: #ff8a8a; }
+  .item.almoco .item-title { color: #ffcb85; }
+  .item-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 3px; }
+
+  .sub-steps { margin-top: 12px; display: flex; flex-direction: column; gap: 6px; }
+  .sub-step { display: flex; align-items: center; gap: 10px; font-size: 12px; }
+  .sub-time { width: 96px; flex-shrink: 0; color: rgba(255,255,255,0.5); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .sub-label { color: rgba(255,255,255,0.75); font-weight: 600; }
+  .sub-pill { font-size: 10px; font-weight: 800; padding: 2px 9px; border-radius: 999px; letter-spacing: .03em; }
+  .pill-briefing { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.6); }
+  .pill-bloco { background: rgba(245,22,39,0.22); color: #ff9a9a; }
+  .pill-debrief { background: rgba(255,180,69,0.16); color: #ffcb85; }
+
+  @media (max-width: 620px) {
+    .wrap { padding: 1.4rem 1rem 0; }
+    .glass-nav { padding: 0 1.2rem; gap: 1rem; }
+    .item { flex-direction: column; gap: 4px; }
+    .item-time { width: auto; }
+    .sub-time { width: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="glass-nav">
+  <div class="nav-logo"><span class="dot"></span> Emergency Talks</div>
+  <div class="nav-crumb">Portal do Aluno · Cronograma do Evento</div>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-head">
+    <div class="eyebrow"><span class="dot"></span>24, 25 e 26 de Setembro</div>
+    <h1>Cronograma do Evento</h1>
+    <div class="page-sub">Selecione seu grupo para ver sua programação completa nos 3 dias.</div>
+  </div>
+
+  <div class="group-selector" id="group-selector"></div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swatch sw-workshop"></span> Workshop</div>
+    <div class="legend-item"><span class="legend-swatch sw-simulado"></span> Simulado</div>
+    <div class="legend-item"><span class="legend-swatch sw-almoco"></span> Almoço</div>
+    <div class="legend-item"><span class="legend-swatch sw-livre"></span> Livre</div>
+  </div>
+
+  <div id="days-container"></div>
+
+</div>
+
+<script>
+const LUNCH = { time: '10:40–11:40', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
+const FREE_MORNING = { time: 'Até 10:40', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' };
+const FREE_AFTERNOON = { time: '11:40 em diante', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' };
+
+function simulado(time, blocos, subTimes) {
+  return {
+    time, type: 'simulado', title: `Simulado — Bloco ${blocos[0]} → Bloco ${blocos[1]}`,
+    sub: [
+      { time: subTimes[0], label: 'Briefing', pill: 'pill-briefing' },
+      { time: subTimes[1], label: `Bloco ${blocos[0]} (rodízio)`, pill: 'pill-bloco' },
+      { time: subTimes[2], label: 'Debriefing', pill: 'pill-debrief' },
+      { time: subTimes[3], label: `Bloco ${blocos[1]} (rodízio)`, pill: 'pill-bloco' },
+    ]
+  };
+}
+function workshop(time) {
+  return { time, type: 'workshop', title: 'Workshop' };
+}
+
+const schedule = {
+  A: [
+    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
+      workshop('08:00–09:15'),
+      simulado('09:20–10:40', [1,2], ['09:20–09:25','09:25–09:50','09:50–10:15','10:15–10:40']),
+      LUNCH,
+      FREE_AFTERNOON,
+    ]},
+    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
+      simulado('08:00–09:20', [3,4], ['08:00–08:05','08:05–08:30','08:30–08:55','08:55–09:20']),
+      LUNCH,
+      FREE_AFTERNOON,
+    ]},
+    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
+      simulado('08:00–09:20', [5,6], ['08:00–08:05','08:05–08:30','08:30–08:55','08:55–09:20']),
+      LUNCH,
+      FREE_AFTERNOON,
+    ]},
+  ],
+  B: [
+    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
+      simulado('08:00–09:20', [1,2], ['08:00–08:05','08:05–08:30','08:30–08:55','08:55–09:20']),
+      workshop('09:20–10:35'),
+      LUNCH,
+      FREE_AFTERNOON,
+    ]},
+    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
+      FREE_MORNING,
+      simulado('09:20–10:40', [3,4], ['09:20–09:25','09:25–09:50','09:50–10:15','10:15–10:40']),
+      LUNCH,
+      FREE_AFTERNOON,
+    ]},
+    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
+      FREE_MORNING,
+      simulado('09:20–10:40', [5,6], ['09:20–09:25','09:25–09:50','09:50–10:15','10:15–10:40']),
+      LUNCH,
+      FREE_AFTERNOON,
+    ]},
+  ],
+  C: [
+    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
+      { time: 'Até 10:40', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' },
+      LUNCH,
+      workshop('11:40–12:55'),
+      simulado('13:00–14:20', [1,2], ['13:00–13:05','13:05–13:30','13:30–13:55','13:55–14:20']),
+    ]},
+    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
+      FREE_MORNING,
+      LUNCH,
+      simulado('11:40–13:00', [3,4], ['11:40–11:45','11:45–12:10','12:10–12:35','12:35–13:00']),
+    ]},
+    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
+      FREE_MORNING,
+      LUNCH,
+      simulado('11:40–13:00', [5,6], ['11:40–11:45','11:45–12:10','12:10–12:35','12:35–13:00']),
+    ]},
+  ],
+  D: [
+    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
+      { time: 'Até 10:40', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' },
+      LUNCH,
+      simulado('11:40–13:00', [1,2], ['11:40–11:45','11:45–12:10','12:10–12:35','12:35–13:00']),
+      workshop('13:00–14:15'),
+    ]},
+    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
+      FREE_MORNING,
+      LUNCH,
+      simulado('13:00–14:20', [3,4], ['13:00–13:05','13:05–13:30','13:30–13:55','13:55–14:20']),
+    ]},
+    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
+      FREE_MORNING,
+      LUNCH,
+      simulado('13:00–14:20', [5,6], ['13:00–13:05','13:05–13:30','13:30–13:55','13:55–14:20']),
+    ]},
+  ],
+};
+
+const ICONS = { workshop: 'ti-presentation', simulado: 'ti-stethoscope', almoco: 'ti-coffee', livre: 'ti-door-exit' };
+
+let currentGroup = 'A';
+
+function renderGroupSelector() {
+  const el = document.getElementById('group-selector');
+  el.innerHTML = Object.keys(schedule).map(g => `
+    <button class="group-btn ${g === currentGroup ? 'active' : ''}" onclick="selectGroup('${g}')">
+      <div class="group-letter">Grupo ${g}</div>
+      <div class="group-label">Ver programação</div>
+    </button>
+  `).join('');
+}
+
+function renderDays() {
+  const el = document.getElementById('days-container');
+  el.innerHTML = schedule[currentGroup].map(day => `
+    <div class="day-card glass">
+      <div class="day-head">
+        <div>
+          <span class="day-title">${day.day}</span>
+          <span class="day-date"> · ${day.date}</span>
+        </div>
+        <div class="day-blocks-tag">Blocos ${day.blocks}</div>
+      </div>
+      <div class="timeline">
+        ${day.items.map(renderItem).join('')}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderItem(item) {
+  const icon = ICONS[item.type] || 'ti-clock';
+  const sub = item.sub ? `<div class="sub-steps">${item.sub.map(s => `
+    <div class="sub-step">
+      <span class="sub-time">${s.time}</span>
+      <span class="sub-pill ${s.pill}">${s.label}</span>
+    </div>`).join('')}</div>` : '';
+  const note = item.note ? `<div class="item-note">${item.note}</div>` : '';
+  return `
+    <div class="item ${item.type}">
+      <div class="item-time">${item.time}</div>
+      <div class="item-body">
+        <div class="item-title"><i class="ti ${icon}"></i>${item.title}</div>
+        ${note}
+        ${sub}
+      </div>
+    </div>
+  `;
+}
+
+function selectGroup(g) {
+  currentGroup = g;
+  renderGroupSelector();
+  renderDays();
+}
+
+renderGroupSelector();
+renderDays();
+</script>
+
+</body>
+</html>
