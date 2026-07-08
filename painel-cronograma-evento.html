@@ -445,7 +445,7 @@ function renderDayView() {
         ${GROUPS.map(g => {
           const day = schedule[g][currentDayIndex];
           return `
-            <div class="day-view-col glass-red">
+            <div class="day-view-col glass-tinted grp-${g}">
               <div class="day-view-col-head">
                 <div class="day-view-col-title">Grupo ${g}</div>
                 <div class="day-blocks-tag">${dayBlocksTag(day)}</div>
