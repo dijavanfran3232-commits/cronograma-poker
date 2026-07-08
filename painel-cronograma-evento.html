@@ -389,7 +389,7 @@ const GROUPS = Object.keys(schedule);
 function renderGroupSelector() {
   const el = document.getElementById('group-selector');
   el.innerHTML = GROUPS.map(g => `
-    <button class="group-btn ${g === currentGroup ? 'active' : ''}" onclick="selectGroup('${g}')">
+    <button class="group-btn grp-${g} ${g === currentGroup ? 'active' : ''}" onclick="selectGroup('${g}')">
       <div class="group-letter">Grupo ${g}</div>
       <div class="group-label">Ver programação</div>
     </button>
