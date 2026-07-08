@@ -7,15 +7,25 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css" />
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ink: 255,255,255; --page-bg: #111113; }
   body {
-    background: #111113;
+    background: var(--page-bg);
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    color: #fff;
+    color: rgb(var(--ink));
     min-height: 100vh;
     padding-bottom: 4rem;
     position: relative;
     overflow-x: hidden;
+    transition: background .2s, color .2s;
   }
+
+  /* ─── MODO CLARO ─── */
+  body.light-mode {
+    --ink: 20,20,26;
+    --page-bg: #f2f2f5;
+  }
+  body.light-mode::before,
+  body.light-mode::after { opacity: .35; }
 
   body::before {
     content: '';
