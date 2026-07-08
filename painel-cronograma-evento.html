@@ -82,6 +82,52 @@
   h1 { font-size: clamp(24px, 4vw, 34px); font-weight: 900; letter-spacing: -0.03em; }
   .page-sub { color: rgba(255,255,255,0.45); font-size: 14px; margin-top: 6px; }
 
+  /* ─── MODE TOGGLE ─── */
+  .mode-toggle { display: inline-flex; gap: 4px; padding: 4px; border-radius: 14px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); margin-bottom: 1.4rem; }
+  .mode-btn {
+    font-family: inherit; font-size: 12px; font-weight: 800; letter-spacing: .03em;
+    padding: 9px 18px; border-radius: 10px; border: none; cursor: pointer;
+    background: transparent; color: rgba(255,255,255,0.45);
+    transition: all .15s;
+  }
+  .mode-btn:hover { color: rgba(255,255,255,0.8); }
+  .mode-btn.active { background: linear-gradient(145deg, #F51627, #A50216); color: #fff; box-shadow: 0 4px 14px rgba(165,2,22,0.4); }
+
+  /* ─── DAY SELECTOR ─── */
+  .day-selector { display: flex; gap: 10px; margin-bottom: 1.6rem; flex-wrap: wrap; }
+  .day-btn {
+    flex: 1; min-width: 150px;
+    border-radius: 16px; padding: 14px 18px; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.10); background: rgba(255,255,255,0.03);
+    transition: all .18s; text-align: left;
+  }
+  .day-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
+  .day-btn.active {
+    background: linear-gradient(145deg, rgba(245,22,39,0.28) 0%, rgba(165,2,22,0.14) 100%);
+    border-color: rgba(245,60,60,0.5);
+    box-shadow: 0 8px 24px rgba(165,2,22,0.3);
+  }
+  .day-btn-title { font-size: 16px; font-weight: 900; letter-spacing: -0.01em; }
+  .day-btn-date { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 600; margin-top: 2px; }
+  .day-btn.active .day-btn-date { color: rgba(255,180,180,0.8); }
+
+  /* ─── DAY VIEW GRID ─── */
+  .day-view-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; align-items: start; }
+  .day-view-col { border-radius: 18px; padding: 16px 14px 6px; }
+  .day-view-col-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+  .day-view-col-title { font-size: 15px; font-weight: 900; }
+  .day-view-col .item { flex-direction: column; gap: 4px; padding: 11px 12px; }
+  .day-view-col .item-time { width: auto; font-size: 11px; }
+  .day-view-col .item-title { font-size: 12px; }
+  .day-view-col .sub-time { width: 76px; font-size: 10px; }
+  .day-view-col .sub-label { font-size: 11px; }
+  @media (max-width: 900px) {
+    .day-view-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .day-view-grid { grid-template-columns: 1fr; }
+  }
+
   /* ─── GROUP SELECTOR ─── */
   .group-selector { display: flex; gap: 10px; margin-bottom: 1.6rem; flex-wrap: wrap; }
   .group-btn {
