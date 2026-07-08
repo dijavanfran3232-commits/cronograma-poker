@@ -214,6 +214,21 @@
   .pill-bloco { background: rgba(var(--grp),0.24); color: rgb(var(--grp)); }
   .pill-debrief { background: rgba(var(--grp),0.14); color: color-mix(in srgb, rgb(var(--grp)) 65%, black 15%); }
 
+  /* ─── VISÃO GERAL (todas as salas e grupos, ordem cronológica) ─── */
+  .overview-section { margin-bottom: 24px; }
+  .overview-lane-title {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(255,255,255,0.45); margin-bottom: 10px;
+  }
+  .overview-lane-title i { font-size: 14px; }
+  .item-group-badge {
+    font-size: 10px; font-weight: 900; letter-spacing: .03em;
+    padding: 2px 9px; border-radius: 999px;
+    background: rgba(var(--grp),0.22); color: rgb(var(--grp));
+    flex-shrink: 0;
+  }
+
   @media (max-width: 620px) {
     .wrap { padding: 1.4rem 1rem 0; }
     .glass-nav { padding: 0 1.2rem; gap: 1rem; }
