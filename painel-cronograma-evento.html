@@ -223,10 +223,16 @@
   <div class="page-head">
     <div class="eyebrow"><span class="dot"></span>24, 25 e 26 de Setembro</div>
     <h1>Cronograma do Evento</h1>
-    <div class="page-sub">Selecione seu grupo para ver sua programação completa nos 3 dias.</div>
+    <div class="page-sub" id="page-sub-text">Selecione seu grupo para ver sua programação completa nos 3 dias.</div>
+  </div>
+
+  <div class="mode-toggle" id="mode-toggle">
+    <button class="mode-btn active" onclick="selectMode('group')">Por Grupo</button>
+    <button class="mode-btn" onclick="selectMode('day')">Por Dia</button>
   </div>
 
   <div class="group-selector" id="group-selector"></div>
+  <div class="day-selector" id="day-selector" style="display:none;"></div>
 
   <div class="summary-bar">
     <div class="summary-chip"><b>1</b> sala de Simulado (compartilhada por todos os grupos)</div>
