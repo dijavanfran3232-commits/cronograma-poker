@@ -157,13 +157,13 @@
   }
   .group-btn:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.2); }
   .group-btn.active {
-    background: linear-gradient(145deg, rgba(245,22,39,0.28) 0%, rgba(165,2,22,0.14) 100%);
-    border-color: rgba(245,60,60,0.5);
-    box-shadow: 0 8px 24px rgba(165,2,22,0.3);
+    background: linear-gradient(145deg, rgba(var(--grp,245,22,39),0.28) 0%, rgba(var(--grp,165,2,22),0.14) 100%);
+    border-color: rgba(var(--grp,245,60,60),0.5);
+    box-shadow: 0 8px 24px rgba(var(--grp,165,2,22),0.3);
   }
-  .group-letter { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; }
+  .group-letter { font-size: 26px; font-weight: 900; letter-spacing: -0.02em; line-height: 1; color: rgb(var(--grp,255,255,255)); }
   .group-label { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
-  .group-btn.active .group-label { color: rgba(255,180,180,0.8); }
+  .group-btn.active .group-label { color: rgba(var(--grp,255,180,180),0.85); }
 
   /* ─── LEGEND ─── */
   .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.8rem; }
