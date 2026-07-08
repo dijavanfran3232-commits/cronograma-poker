@@ -256,6 +256,32 @@
     flex-shrink: 0;
   }
 
+  /* ─── AJUSTES DE CONTRASTE NO MODO CLARO ─── */
+  body.light-mode .glass {
+    background: linear-gradient(145deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.72) 100%);
+    border: 1px solid rgba(0,0,0,0.07);
+    border-top-color: rgba(255,255,255,0.95);
+    border-left-color: rgba(255,255,255,0.85);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7), inset 0 -1px 0 rgba(0,0,0,0.03), 0 8px 28px rgba(0,0,0,0.07);
+  }
+  body.light-mode .glass-tinted {
+    background: linear-gradient(145deg, rgba(255,255,255,0.88) 0%, rgba(var(--grp,245,22,39),0.10) 60%, rgba(var(--grp,245,22,39),0.06) 100%);
+    border: 1px solid rgba(var(--grp,220,60,60),0.3);
+    border-top-color: rgba(255,255,255,0.85);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(0,0,0,0.03), 0 10px 28px rgba(var(--grp,165,2,22),0.12);
+  }
+  body.light-mode .item.workshop .item-title { color: color-mix(in srgb, rgb(var(--grp)) 70%, black 30%); }
+  body.light-mode .item.simulado .item-title { color: color-mix(in srgb, rgb(var(--grp)) 82%, black 18%); }
+  body.light-mode .item.almoco .item-title { color: color-mix(in srgb, rgb(var(--grp)) 75%, black 25%); }
+  body.light-mode .pill-briefing { color: color-mix(in srgb, rgb(var(--grp)) 65%, black 30%); }
+  body.light-mode .pill-debrief { color: color-mix(in srgb, rgb(var(--grp)) 70%, black 25%); }
+  body.light-mode .group-letter,
+  body.light-mode .day-view-col-title,
+  body.light-mode .day-blocks-tag,
+  body.light-mode .item-group-badge,
+  body.light-mode .pill-bloco { color: color-mix(in srgb, rgb(var(--grp)) 78%, black 20%); }
+  body.light-mode .eyebrow { color: #c0202f; }
+
   @media (max-width: 620px) {
     .wrap { padding: 1.4rem 1rem 0; }
     .glass-nav { padding: 0 1.2rem; gap: 1rem; }
