@@ -377,14 +377,27 @@ const schedule = {
 
 const ICONS = { workshop: 'ti-presentation', simulado: 'ti-stethoscope', almoco: 'ti-coffee', livre: 'ti-door-exit' };
 
+let currentMode = 'group';
 let currentGroup = 'A';
+let currentDayIndex = 0;
+const GROUPS = Object.keys(schedule);
 
 function renderGroupSelector() {
   const el = document.getElementById('group-selector');
-  el.innerHTML = Object.keys(schedule).map(g => `
+  el.innerHTML = GROUPS.map(g => `
     <button class="group-btn ${g === currentGroup ? 'active' : ''}" onclick="selectGroup('${g}')">
       <div class="group-letter">Grupo ${g}</div>
       <div class="group-label">Ver programação</div>
+    </button>
+  `).join('');
+}
+
+function renderDaySelector() {
+  const el = document.getElementById('day-selector');
+  el.innerHTML = schedule.A.map((day, i) => `
+    <button class="day-btn ${i === currentDayIndex ? 'active' : ''}" onclick="selectDay(${i})">
+      <div class="day-btn-title">${day.day}</div>
+      <div class="day-btn-date">${day.date}</div>
     </button>
   `).join('');
 }
@@ -411,6 +424,45 @@ function renderDays() {
       </div>
     </div>
   `).join('');
+}
+
+function renderDayView() {
+  const el = document.getElementById('days-container');
+  const refDay = schedule.A[currentDayIndex];
+  el.innerHTML = `
+    <div class="day-card glass" style="padding-bottom:22px;">
+      <div class="day-head">
+        <div>
+          <span class="day-title">${refDay.day}</span>
+          <span class="day-date"> · ${refDay.date}</span>
+        </div>
+      </div>
+      <div class="day-view-grid">
+        ${GROUPS.map(g => {
+          const day = schedule[g][currentDayIndex];
+          return `
+            <div class="day-view-col glass-red">
+              <div class="day-view-col-head">
+                <div class="day-view-col-title">Grupo ${g}</div>
+                <div class="day-blocks-tag">${dayBlocksTag(day)}</div>
+              </div>
+              <div class="timeline">
+                ${day.items.map(renderItem).join('')}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderContent() {
+  if (currentMode === 'group') {
+    renderDays();
+  } else {
+    renderDayView();
+  }
 }
 
 function renderItem(item) {
