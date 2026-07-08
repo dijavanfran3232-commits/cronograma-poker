@@ -572,15 +572,19 @@ function selectDay(i) {
   renderContent();
 }
 
+const PAGE_SUB = {
+  group: 'Selecione seu grupo para ver sua programação completa nos 3 dias.',
+  day: 'Selecione um dia para ver a programação de todos os grupos lado a lado.',
+  overview: 'Selecione um dia para ver o cronograma completo, com todas as salas e grupos juntos.',
+};
+
 function selectMode(mode, btn) {
   currentMode = mode;
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   document.getElementById('group-selector').style.display = mode === 'group' ? 'flex' : 'none';
-  document.getElementById('day-selector').style.display = mode === 'day' ? 'flex' : 'none';
-  document.getElementById('page-sub-text').textContent = mode === 'group'
-    ? 'Selecione seu grupo para ver sua programação completa nos 3 dias.'
-    : 'Selecione um dia para ver a programação de todos os grupos lado a lado.';
+  document.getElementById('day-selector').style.display = (mode === 'day' || mode === 'overview') ? 'flex' : 'none';
+  document.getElementById('page-sub-text').textContent = PAGE_SUB[mode];
   renderContent();
 }
 
