@@ -648,6 +648,25 @@ function selectMode(mode, btn) {
 renderGroupSelector();
 renderDaySelector();
 renderContent();
+
+/* ── tema claro/escuro ── */
+function applyTheme(isLight) {
+  document.body.classList.toggle('light-mode', isLight);
+  document.getElementById('theme-toggle-icon').className = isLight ? 'ti ti-sun' : 'ti ti-moon';
+  document.getElementById('theme-toggle-label').textContent = isLight ? 'Modo claro' : 'Modo noturno';
+}
+
+function toggleTheme() {
+  const isLight = !document.body.classList.contains('light-mode');
+  applyTheme(isLight);
+  try { localStorage.setItem('cronograma-theme', isLight ? 'light' : 'dark'); } catch (e) {}
+}
+
+(function initTheme() {
+  let saved = null;
+  try { saved = localStorage.getItem('cronograma-theme'); } catch (e) {}
+  applyTheme(saved === 'light');
+})();
 </script>
 
 </body>
