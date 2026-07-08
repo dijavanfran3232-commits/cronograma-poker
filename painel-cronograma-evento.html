@@ -497,10 +497,10 @@ function selectDay(i) {
   renderContent();
 }
 
-function selectMode(mode) {
+function selectMode(mode, btn) {
   currentMode = mode;
   document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
+  btn.classList.add('active');
   document.getElementById('group-selector').style.display = mode === 'group' ? 'flex' : 'none';
   document.getElementById('day-selector').style.display = mode === 'day' ? 'flex' : 'none';
   document.getElementById('page-sub-text').textContent = mode === 'group'
