@@ -104,6 +104,11 @@
   .group-label { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: .06em; }
   .group-btn.active .group-label { color: rgba(255,180,180,0.8); }
 
+  /* ─── SUMMARY ─── */
+  .summary-bar { display: flex; gap: 10px; margin-bottom: 1.4rem; flex-wrap: wrap; }
+  .summary-chip { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.6); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 6px 14px; border-radius: 999px; }
+  .summary-chip b { color: #ff9a9a; }
+
   /* ─── LEGEND ─── */
   .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 1.8rem; }
   .legend-item { display: flex; align-items: center; gap: 7px; font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 600; }
@@ -177,6 +182,12 @@
 
   <div class="group-selector" id="group-selector"></div>
 
+  <div class="summary-bar">
+    <div class="summary-chip"><b>1</b> sala de Simulado (compartilhada por todos os grupos)</div>
+    <div class="summary-chip"><b>4</b> blocos de Simulado por grupo (Bloco 1 → Bloco 4, em ordem)</div>
+    <div class="summary-chip">Dia 1 até <b>14h20</b> · Dias 2 e 3 até <b>17h00</b></div>
+  </div>
+
   <div class="legend">
     <div class="legend-item"><span class="legend-swatch sw-workshop"></span> Workshop</div>
     <div class="legend-item"><span class="legend-swatch sw-simulado"></span> Simulado</div>
@@ -189,98 +200,125 @@
 </div>
 
 <script>
-const LUNCH = { time: '10:40–11:40', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
-const FREE_MORNING = { time: 'Até 10:40', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' };
-const FREE_AFTERNOON = { time: '11:40 em diante', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' };
+/* ── time helpers ── */
+function toMin(hhmm) { const [h,m] = hhmm.split(':').map(Number); return h*60+m; }
+function toHHMM(min) { const h = Math.floor(min/60), m = min%60; return String(h).padStart(2,'0')+':'+String(m).padStart(2,'0'); }
+function addMin(hhmm, mins) { return toHHMM(toMin(hhmm)+mins); }
+function range(hhmm, mins) { return `${hhmm}–${addMin(hhmm, mins)}`; }
 
-function simulado(time, blocos, subTimes) {
+const LUNCH = { time: '10:40–11:40', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
+
+function workshop(start) {
+  return { time: range(start, 75), type: 'workshop', title: 'Workshop' };
+}
+
+/* simulado = 1 bloco só, tentado 2x (1ª tentativa -> debriefing -> 2ª tentativa, mesmo bloco) */
+function simulado(start, bloco) {
+  const t0 = start, t1 = addMin(start,5), t2 = addMin(start,30), t3 = addMin(start,55), t4 = addMin(start,80);
   return {
-    time, type: 'simulado', title: `Simulado — Bloco ${blocos[0]} → Bloco ${blocos[1]}`,
+    time: `${t0}–${t4}`, type: 'simulado', title: `Simulado — Bloco ${bloco}`, bloco,
     sub: [
-      { time: subTimes[0], label: 'Briefing', pill: 'pill-briefing' },
-      { time: subTimes[1], label: `Bloco ${blocos[0]} (rodízio)`, pill: 'pill-bloco' },
-      { time: subTimes[2], label: 'Debriefing', pill: 'pill-debrief' },
-      { time: subTimes[3], label: `Bloco ${blocos[1]} (rodízio)`, pill: 'pill-bloco' },
+      { time: `${t0}–${t1}`, label: 'Briefing', pill: 'pill-briefing' },
+      { time: `${t1}–${t2}`, label: `Bloco ${bloco} (1ª tentativa)`, pill: 'pill-bloco' },
+      { time: `${t2}–${t3}`, label: 'Debriefing', pill: 'pill-debrief' },
+      { time: `${t3}–${t4}`, label: `Bloco ${bloco} (2ª tentativa)`, pill: 'pill-bloco' },
     ]
   };
 }
-function workshop(time) {
-  return { time, type: 'workshop', title: 'Workshop' };
+
+function livre(time, note) {
+  return { time, type: 'livre', title: 'Livre', note };
 }
 
 const schedule = {
   A: [
-    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
-      workshop('08:00–09:15'),
-      simulado('09:20–10:40', [1,2], ['09:20–09:25','09:25–09:50','09:50–10:15','10:15–10:40']),
+    { day: 'Dia 1', date: '24/09', items: [
+      workshop('08:00'),
+      simulado('09:20', 1),
       LUNCH,
-      FREE_AFTERNOON,
+      livre('11:40–14:20', 'Grupos C e D em atividade — dia encerra às 14h20'),
     ]},
-    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
-      simulado('08:00–09:20', [3,4], ['08:00–08:05','08:05–08:30','08:30–08:55','08:55–09:20']),
+    { day: 'Dia 2', date: '25/09', items: [
+      simulado('08:00', 2),
+      livre('09:20–10:40', 'Grupo B na sala de Simulado'),
       LUNCH,
-      FREE_AFTERNOON,
+      livre('11:40–14:20', 'Grupos C e D na sala de Simulado'),
+      simulado('14:20', 3),
+      livre('15:40–17:00', 'Grupo B na sala de Simulado — dia encerra às 17h'),
     ]},
-    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
-      simulado('08:00–09:20', [5,6], ['08:00–08:05','08:05–08:30','08:30–08:55','08:55–09:20']),
+    { day: 'Dia 3', date: '26/09', items: [
+      livre('08:00–10:40', 'Grupos C e D na sala de Simulado'),
       LUNCH,
-      FREE_AFTERNOON,
+      livre('11:40–14:20', 'Grupos C e D na sala de Simulado'),
+      simulado('14:20', 4),
+      livre('15:40–17:00', 'Grupo B na sala de Simulado — dia encerra às 17h'),
     ]},
   ],
   B: [
-    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
-      simulado('08:00–09:20', [1,2], ['08:00–08:05','08:05–08:30','08:30–08:55','08:55–09:20']),
-      workshop('09:20–10:35'),
+    { day: 'Dia 1', date: '24/09', items: [
+      simulado('08:00', 1),
+      workshop('09:20'),
       LUNCH,
-      FREE_AFTERNOON,
+      livre('11:40–14:20', 'Grupos C e D em atividade — dia encerra às 14h20'),
     ]},
-    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
-      FREE_MORNING,
-      simulado('09:20–10:40', [3,4], ['09:20–09:25','09:25–09:50','09:50–10:15','10:15–10:40']),
+    { day: 'Dia 2', date: '25/09', items: [
+      livre('08:00–09:20', 'Grupo A na sala de Simulado'),
+      simulado('09:20', 2),
       LUNCH,
-      FREE_AFTERNOON,
+      livre('11:40–14:20', 'Grupos C e D na sala de Simulado'),
+      livre('14:20–15:40', 'Grupo A na sala de Simulado'),
+      simulado('15:40', 3),
     ]},
-    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
-      FREE_MORNING,
-      simulado('09:20–10:40', [5,6], ['09:20–09:25','09:25–09:50','09:50–10:15','10:15–10:40']),
+    { day: 'Dia 3', date: '26/09', items: [
+      livre('08:00–10:40', 'Grupos C e D na sala de Simulado'),
       LUNCH,
-      FREE_AFTERNOON,
+      livre('11:40–14:20', 'Grupos C e D na sala de Simulado'),
+      livre('14:20–15:40', 'Grupo A na sala de Simulado'),
+      simulado('15:40', 4),
     ]},
   ],
   C: [
-    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
-      { time: 'Até 10:40', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' },
+    { day: 'Dia 1', date: '24/09', items: [
+      livre('08:00–10:40', 'Grupos A e B em atividade'),
       LUNCH,
-      workshop('11:40–12:55'),
-      simulado('13:00–14:20', [1,2], ['13:00–13:05','13:05–13:30','13:30–13:55','13:55–14:20']),
+      workshop('11:40'),
+      simulado('13:00', 1),
     ]},
-    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
-      FREE_MORNING,
+    { day: 'Dia 2', date: '25/09', items: [
+      livre('08:00–10:40', 'Grupos A e B na sala de Simulado'),
       LUNCH,
-      simulado('11:40–13:00', [3,4], ['11:40–11:45','11:45–12:10','12:10–12:35','12:35–13:00']),
+      simulado('11:40', 2),
+      livre('13:00–17:00', 'Grupo D, depois A e B, na sala de Simulado — dia encerra às 17h'),
     ]},
-    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
-      FREE_MORNING,
+    { day: 'Dia 3', date: '26/09', items: [
+      simulado('08:00', 3),
+      livre('09:20–10:40', 'Grupo D na sala de Simulado'),
       LUNCH,
-      simulado('11:40–13:00', [5,6], ['11:40–11:45','11:45–12:10','12:10–12:35','12:35–13:00']),
+      simulado('11:40', 4),
+      livre('13:00–17:00', 'Grupo D, depois A e B, na sala de Simulado — dia encerra às 17h'),
     ]},
   ],
   D: [
-    { day: 'Dia 1', date: '24/09', blocks: '1 e 2', items: [
-      { time: 'Até 10:40', type: 'livre', title: 'Livre', note: 'Fora do espaço do evento' },
+    { day: 'Dia 1', date: '24/09', items: [
+      livre('08:00–10:40', 'Grupos A e B em atividade'),
       LUNCH,
-      simulado('11:40–13:00', [1,2], ['11:40–11:45','11:45–12:10','12:10–12:35','12:35–13:00']),
-      workshop('13:00–14:15'),
+      simulado('11:40', 1),
+      workshop('13:00'),
     ]},
-    { day: 'Dia 2', date: '25/09', blocks: '3 e 4', items: [
-      FREE_MORNING,
+    { day: 'Dia 2', date: '25/09', items: [
+      livre('08:00–10:40', 'Grupos A e B na sala de Simulado'),
       LUNCH,
-      simulado('13:00–14:20', [3,4], ['13:00–13:05','13:05–13:30','13:30–13:55','13:55–14:20']),
+      livre('11:40–13:00', 'Grupo C na sala de Simulado'),
+      simulado('13:00', 2),
+      livre('14:20–17:00', 'Grupos A e B na sala de Simulado — dia encerra às 17h'),
     ]},
-    { day: 'Dia 3', date: '26/09', blocks: '5 e 6', items: [
-      FREE_MORNING,
+    { day: 'Dia 3', date: '26/09', items: [
+      livre('08:00–09:20', 'Grupo C na sala de Simulado'),
+      simulado('09:20', 3),
       LUNCH,
-      simulado('13:00–14:20', [5,6], ['13:00–13:05','13:05–13:30','13:30–13:55','13:55–14:20']),
+      livre('11:40–13:00', 'Grupo C na sala de Simulado'),
+      simulado('13:00', 4),
+      livre('14:20–17:00', 'Grupos A e B na sala de Simulado — dia encerra às 17h'),
     ]},
   ],
 };
@@ -299,6 +337,12 @@ function renderGroupSelector() {
   `).join('');
 }
 
+function dayBlocksTag(day) {
+  const blocos = day.items.filter(i => i.type === 'simulado').map(i => i.bloco);
+  if (!blocos.length) return 'Sem Simulado';
+  return blocos.length > 1 ? `Blocos ${blocos.join(' e ')}` : `Bloco ${blocos[0]}`;
+}
+
 function renderDays() {
   const el = document.getElementById('days-container');
   el.innerHTML = schedule[currentGroup].map(day => `
@@ -308,7 +352,7 @@ function renderDays() {
           <span class="day-title">${day.day}</span>
           <span class="day-date"> · ${day.date}</span>
         </div>
-        <div class="day-blocks-tag">Blocos ${day.blocks}</div>
+        <div class="day-blocks-tag">${dayBlocksTag(day)}</div>
       </div>
       <div class="timeline">
         ${day.items.map(renderItem).join('')}
