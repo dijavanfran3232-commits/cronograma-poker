@@ -488,11 +488,30 @@ function renderItem(item) {
 function selectGroup(g) {
   currentGroup = g;
   renderGroupSelector();
-  renderDays();
+  renderContent();
+}
+
+function selectDay(i) {
+  currentDayIndex = i;
+  renderDaySelector();
+  renderContent();
+}
+
+function selectMode(mode) {
+  currentMode = mode;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('group-selector').style.display = mode === 'group' ? 'flex' : 'none';
+  document.getElementById('day-selector').style.display = mode === 'day' ? 'flex' : 'none';
+  document.getElementById('page-sub-text').textContent = mode === 'group'
+    ? 'Selecione seu grupo para ver sua programação completa nos 3 dias.'
+    : 'Selecione um dia para ver a programação de todos os grupos lado a lado.';
+  renderContent();
 }
 
 renderGroupSelector();
-renderDays();
+renderDaySelector();
+renderContent();
 </script>
 
 </body>
