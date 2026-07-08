@@ -53,6 +53,21 @@
     border-top-color: rgba(255,100,100,0.32);
     box-shadow: inset 0 1px 0 rgba(255,120,120,0.18), inset 0 -1px 0 rgba(100,0,0,0.3), 0 12px 40px rgba(165,2,22,0.25), 0 4px 16px rgba(0,0,0,0.5);
   }
+  /* group-colored glass variant: relies on --grp custom property from .grp-A/B/C/D */
+  .glass-tinted {
+    background: linear-gradient(145deg, rgba(var(--grp,245,22,39),0.22) 0%, rgba(var(--grp,245,22,39),0.10) 50%, rgba(var(--grp,140,10,10),0.06) 100%);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(var(--grp,220,60,60),0.24);
+    border-top-color: rgba(var(--grp,255,100,100),0.34);
+    box-shadow: inset 0 1px 0 rgba(var(--grp,255,120,120),0.18), inset 0 -1px 0 rgba(0,0,0,0.25), 0 12px 40px rgba(var(--grp,165,2,22),0.22), 0 4px 16px rgba(0,0,0,0.5);
+  }
+
+  /* ─── GROUP COLORS ─── */
+  .grp-A { --grp: 245,22,39; }   /* vermelho */
+  .grp-B { --grp: 59,130,246; }  /* azul */
+  .grp-C { --grp: 34,197,94; }   /* verde */
+  .grp-D { --grp: 250,204,21; }  /* amarelo */
 
   /* ─── NAV ─── */
   .glass-nav {
