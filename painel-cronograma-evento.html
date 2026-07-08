@@ -415,7 +415,7 @@ function dayBlocksTag(day) {
 function renderDays() {
   const el = document.getElementById('days-container');
   el.innerHTML = schedule[currentGroup].map(day => `
-    <div class="day-card glass">
+    <div class="day-card glass-tinted grp-${currentGroup}">
       <div class="day-head">
         <div>
           <span class="day-title">${day.day}</span>
