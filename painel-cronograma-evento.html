@@ -479,16 +479,69 @@ function renderDayView() {
   `;
 }
 
+/* junta tudo (Workshop, Simulado, Almoço) de todos os grupos num único dia, em ordem cronológica por sala */
+function getDayOverview(dayIndex) {
+  const workshopEvents = [];
+  const simuladoEvents = [];
+  GROUPS.forEach(g => {
+    schedule[g][dayIndex].items.forEach(item => {
+      if (item.type === 'workshop') workshopEvents.push({ ...item, group: g });
+      if (item.type === 'simulado') simuladoEvents.push({ ...item, group: g });
+    });
+  });
+  const byStart = (a, b) => toMin(a.time.split('–')[0]) - toMin(b.time.split('–')[0]);
+  workshopEvents.sort(byStart);
+  simuladoEvents.sort(byStart);
+  return { workshopEvents, simuladoEvents };
+}
+
+function renderDayOverview() {
+  const el = document.getElementById('days-container');
+  const refDay = schedule.A[currentDayIndex];
+  const { workshopEvents, simuladoEvents } = getDayOverview(currentDayIndex);
+  const workshopLane = workshopEvents.length
+    ? `<div class="overview-section">
+        <div class="overview-lane-title"><i class="ti ti-presentation"></i> Sala Workshop</div>
+        <div class="timeline">${workshopEvents.map(ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`).join('')}</div>
+      </div>`
+    : '';
+  const simuladoLane = `<div class="overview-section">
+      <div class="overview-lane-title"><i class="ti ti-stethoscope"></i> Sala Simulado</div>
+      <div class="timeline">${simuladoEvents.map(ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`).join('')}</div>
+    </div>`;
+  const lunchLane = `<div class="overview-section">
+      <div class="overview-lane-title"><i class="ti ti-coffee"></i> Almoço — todos os grupos</div>
+      <div class="timeline">${renderItem(LUNCH)}</div>
+    </div>`;
+
+  el.innerHTML = `
+    <div class="day-card glass">
+      <div class="day-head">
+        <div>
+          <span class="day-title">${refDay.day}</span>
+          <span class="day-date"> · ${refDay.date} — visão geral de tudo</span>
+        </div>
+      </div>
+      ${workshopLane}
+      ${simuladoLane}
+      ${lunchLane}
+    </div>
+  `;
+}
+
 function renderContent() {
   if (currentMode === 'group') {
     renderDays();
-  } else {
+  } else if (currentMode === 'day') {
     renderDayView();
+  } else {
+    renderDayOverview();
   }
 }
 
-function renderItem(item) {
+function renderItem(item, groupBadge) {
   const icon = ICONS[item.type] || 'ti-clock';
+  const badge = groupBadge ? `<span class="item-group-badge">Grupo ${groupBadge}</span>` : '';
   const sub = item.sub ? `<div class="sub-steps">${item.sub.map(s => `
     <div class="sub-step">
       <span class="sub-time">${s.time}</span>
@@ -499,7 +552,7 @@ function renderItem(item) {
     <div class="item ${item.type}">
       <div class="item-time">${item.time}</div>
       <div class="item-body">
-        <div class="item-title"><i class="ti ${icon}"></i>${item.title}</div>
+        <div class="item-title">${badge}<i class="ti ${icon}"></i>${item.title}</div>
         ${note}
         ${sub}
       </div>
