@@ -670,24 +670,18 @@ function getDayOverview(dayIndex) {
   return { workshopEvents, simuladoEvents };
 }
 
+/* uma única lista cronológica (Workshop + Simulado misturados, ordenados só por horário)
+   pra ninguém precisar pular entre seções pra entender o que acontece a cada hora */
 function renderDayOverview() {
   const el = document.getElementById('days-container');
   const refDay = schedule.A[currentDayIndex];
   const { workshopEvents, simuladoEvents } = getDayOverview(currentDayIndex);
-  const workshopLane = workshopEvents.length
-    ? `<div class="overview-section">
-        <div class="overview-lane-title"><i class="ti ti-presentation"></i> Sala Workshop</div>
-        ${renderLaneWithPeriods(workshopEvents)}
-      </div>`
-    : '';
-  const simuladoLane = `<div class="overview-section">
-      <div class="overview-lane-title"><i class="ti ti-stethoscope"></i> Sala Simulado</div>
-      ${renderLaneWithPeriods(simuladoEvents)}
-    </div>`;
-  const lunchLane = `<div class="overview-section">
-      <div class="overview-lane-title"><i class="ti ti-coffee"></i> Almoço — todos os grupos</div>
-      <div class="timeline">${renderItem(LUNCH)}</div>
-    </div>`;
+  const merged = [...workshopEvents, ...simuladoEvents]
+    .sort((a, b) => toMin(a.time.split('–')[0]) - toMin(b.time.split('–')[0]));
+  const cutoff = toMin('12:00');
+  const morning = merged.filter(ev => toMin(ev.time.split('–')[0]) < cutoff);
+  const afternoon = merged.filter(ev => toMin(ev.time.split('–')[0]) >= cutoff);
+  const row = ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`;
 
   el.innerHTML = `
     <div class="day-card glass">
@@ -697,9 +691,11 @@ function renderDayOverview() {
           <span class="day-date"> · ${refDay.date} — visão geral de tudo</span>
         </div>
       </div>
-      ${workshopLane}
-      ${simuladoLane}
-      ${lunchLane}
+      <div class="timeline">${morning.map(row).join('')}</div>
+      <div class="full-period-divider">
+        <span class="full-period-lunch"><i class="ti ti-coffee"></i>Almoço ${LUNCH.time}</span>
+      </div>
+      <div class="timeline">${afternoon.map(row).join('')}</div>
     </div>
   `;
 }
