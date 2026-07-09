@@ -388,16 +388,16 @@ function workshop(start) {
   return { time: range(start, 75), type: 'workshop', title: 'Workshop' };
 }
 
-/* simulado = 1 bloco só, tentado 2x (1ª tentativa -> debriefing -> 2ª tentativa, mesmo bloco) */
+/* simulado = 1 bloco só, tentado 2x (1ª tentativa -> debriefing -> 2ª tentativa, mesmo bloco).
+   Total 1h15: 25min rodízio + 25min debriefing + 25min rodízio. */
 function simulado(start, bloco) {
-  const t0 = start, t1 = addMin(start,5), t2 = addMin(start,30), t3 = addMin(start,55), t4 = addMin(start,80);
+  const t0 = start, t1 = addMin(start,25), t2 = addMin(start,50), t3 = addMin(start,75);
   return {
-    time: `${t0}–${t4}`, type: 'simulado', title: `Simulado — Bloco ${bloco}`, bloco,
+    time: `${t0}–${t3}`, type: 'simulado', title: `Simulado — Bloco ${bloco}`, bloco,
     sub: [
-      { time: `${t0}–${t1}`, label: 'Briefing', pill: 'pill-briefing' },
-      { time: `${t1}–${t2}`, label: `Bloco ${bloco} (1ª tentativa)`, pill: 'pill-bloco' },
-      { time: `${t2}–${t3}`, label: 'Debriefing', pill: 'pill-debrief' },
-      { time: `${t3}–${t4}`, label: `Bloco ${bloco} (2ª tentativa)`, pill: 'pill-bloco' },
+      { time: `${t0}–${t1}`, label: `Bloco ${bloco} (1ª tentativa)`, pill: 'pill-bloco' },
+      { time: `${t1}–${t2}`, label: 'Debriefing', pill: 'pill-debrief' },
+      { time: `${t2}–${t3}`, label: `Bloco ${bloco} (2ª tentativa)`, pill: 'pill-bloco' },
     ]
   };
 }
