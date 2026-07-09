@@ -599,9 +599,24 @@ function renderDays() {
   `).join('');
 }
 
+/* divide os itens de um grupo/dia em manhã e tarde, usando o item de almoço como corte */
+function splitDayItems(items) {
+  const lunchIdx = items.findIndex(i => i.type === 'almoco');
+  const morning = lunchIdx === -1 ? items : items.slice(0, lunchIdx);
+  const afternoon = lunchIdx === -1 ? [] : items.slice(lunchIdx + 1);
+  const lunch = lunchIdx === -1 ? null : items[lunchIdx];
+  return { morning, afternoon, lunch };
+}
+
 function renderDayView() {
   const el = document.getElementById('days-container');
   const refDay = schedule.A[currentDayIndex];
+  const splits = GROUPS.map(g => {
+    const day = schedule[g][currentDayIndex];
+    return { g, day, ...splitDayItems(day.items) };
+  });
+  const lunchTime = splits.find(s => s.lunch)?.lunch.time || LUNCH.time;
+
   el.innerHTML = `
     <div class="day-card glass" style="padding-bottom:22px;">
       <div class="day-head">
@@ -611,18 +626,27 @@ function renderDayView() {
         </div>
       </div>
       <div class="day-view-grid">
-        ${GROUPS.map(g => {
-          const day = schedule[g][currentDayIndex];
-          return `
-            <div class="day-view-col glass-tinted grp-${g}">
-              <div class="day-view-col-head">
-                <div class="day-view-col-title">Grupo ${g}</div>
-                <div class="day-blocks-tag">${dayBlocksTag(day)}</div>
-              </div>
-              ${renderTimelineWithPeriods(day.items)}
+        ${splits.map(({ g, day, morning }) => `
+          <div class="day-view-col glass-tinted grp-${g}">
+            <div class="day-view-col-head">
+              <div class="day-view-col-title">Grupo ${g}</div>
+              <div class="day-blocks-tag">${dayBlocksTag(day)}</div>
             </div>
-          `;
-        }).join('')}
+            <div class="timeline">${morning.map(i => renderItem(i)).join('')}</div>
+          </div>
+        `).join('')}
+      </div>
+      <div class="full-period-divider">
+        <span><i class="ti ti-sun"></i>Manhã</span>
+        <span class="full-period-lunch"><i class="ti ti-coffee"></i>Almoço ${lunchTime}</span>
+        <span><i class="ti ti-sunset-2"></i>Tarde</span>
+      </div>
+      <div class="day-view-grid">
+        ${splits.map(({ g, afternoon }) => `
+          <div class="day-view-col glass-tinted grp-${g}">
+            <div class="timeline">${afternoon.map(i => renderItem(i)).join('')}</div>
+          </div>
+        `).join('')}
       </div>
     </div>
   `;
