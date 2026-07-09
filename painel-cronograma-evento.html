@@ -337,7 +337,7 @@ function toHHMM(min) { const h = Math.floor(min/60), m = min%60; return String(h
 function addMin(hhmm, mins) { return toHHMM(toMin(hhmm)+mins); }
 function range(hhmm, mins) { return `${hhmm}–${addMin(hhmm, mins)}`; }
 
-const LUNCH = { time: '10:40–11:40', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
+const LUNCH = { time: '12:00–13:00', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
 
 function workshop(start) {
   return { time: range(start, 75), type: 'workshop', title: 'Workshop' };
