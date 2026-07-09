@@ -382,8 +382,16 @@ function range(hhmm, mins) { return `${hhmm}–${addMin(hhmm, mins)}`; }
 
 const LUNCH = { time: '11:45–12:45', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
 
+/* workshop = 2h30, dividido em 2 partes de 1h15 cada */
 function workshop(start, topic) {
-  return { time: range(start, 150), type: 'workshop', title: topic ? `Workshop — ${topic}` : 'Workshop' };
+  const t0 = start, t1 = addMin(start, 75), t2 = addMin(start, 150);
+  return {
+    time: `${t0}–${t2}`, type: 'workshop', title: topic ? `Workshop — ${topic}` : 'Workshop',
+    sub: [
+      { time: `${t0}–${t1}`, label: 'Parte 1', pill: 'pill-bloco' },
+      { time: `${t1}–${t2}`, label: 'Parte 2', pill: 'pill-debrief' },
+    ]
+  };
 }
 
 /* simulado = 1 bloco só, tentado 2x (1ª tentativa -> debriefing -> 2ª tentativa, mesmo bloco).
