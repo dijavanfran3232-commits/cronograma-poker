@@ -208,17 +208,25 @@
   .day-date { font-size: 12px; color: rgba(var(--ink),0.4); font-weight: 600; }
   .day-blocks-tag { font-size: 11px; font-weight: 700; color: rgb(var(--grp,255,154,154)); background: rgba(var(--grp,245,22,39),0.14); border: 1px solid rgba(var(--grp,245,60,60),0.25); padding: 3px 10px; border-radius: 999px; }
 
-  /* ─── PERÍODO (Manhã / Tarde) ─── */
-  .period-title {
-    display: flex; align-items: center; gap: 7px;
-    font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
-    color: rgba(var(--ink),0.4); margin: 16px 0 8px;
+  /* ─── PERÍODO (Manhã / Tarde) — divisor com linha horizontal ─── */
+  .period-divider {
+    display: flex; align-items: center; gap: 12px;
+    margin: 18px 0 10px;
   }
-  .period-title:first-child { margin-top: 0; }
-  .period-title i { font-size: 13px; }
+  .period-divider:first-child { margin-top: 0; }
+  .period-divider::before, .period-divider::after {
+    content: ''; flex: 1; height: 1px; background: rgba(var(--ink),0.14);
+  }
+  .period-divider span {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    color: rgba(var(--ink),0.45); white-space: nowrap;
+  }
+  .period-divider i { font-size: 13px; }
   .lunch-divider { margin: 2px 0 8px; }
-  .day-view-col .period-title { font-size: 10px; margin: 12px 0 6px; }
-  .day-view-col .period-title i { font-size: 12px; }
+  .day-view-col .period-divider { margin: 12px 0 6px; }
+  .day-view-col .period-divider span { font-size: 10px; }
+  .day-view-col .period-divider i { font-size: 12px; }
 
   .timeline { display: flex; flex-direction: column; gap: 10px; padding-bottom: 14px; }
   .item {
