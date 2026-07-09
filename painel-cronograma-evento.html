@@ -540,9 +540,9 @@ function renderTimelineWithPeriods(items) {
   const afternoon = lunchIdx === -1 ? [] : items.slice(lunchIdx + 1);
   const lunch = lunchIdx === -1 ? null : items[lunchIdx];
   let html = '';
-  if (morning.length) html += `<div class="period-title"><i class="ti ti-sun"></i>Manhã</div><div class="timeline">${morning.map(i => renderItem(i)).join('')}</div>`;
+  if (morning.length) html += `<div class="period-divider"><span><i class="ti ti-sun"></i>Manhã</span></div><div class="timeline">${morning.map(i => renderItem(i)).join('')}</div>`;
   if (lunch) html += `<div class="timeline lunch-divider">${renderItem(lunch)}</div>`;
-  if (afternoon.length) html += `<div class="period-title"><i class="ti ti-sunset-2"></i>Tarde</div><div class="timeline">${afternoon.map(i => renderItem(i)).join('')}</div>`;
+  if (afternoon.length) html += `<div class="period-divider"><span><i class="ti ti-sunset-2"></i>Tarde</span></div><div class="timeline">${afternoon.map(i => renderItem(i)).join('')}</div>`;
   return html;
 }
 
