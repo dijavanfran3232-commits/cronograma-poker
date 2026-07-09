@@ -558,8 +558,10 @@ function dayBlocksTag(day) {
   return blocos.length > 1 ? `Blocos ${blocos.join(' e ')}` : `Bloco ${blocos[0]}`;
 }
 
-/* separa a lista de itens de um dia em Manhã / Almoço / Tarde, pra ficar mais fácil de ler */
-function renderTimelineWithPeriods(items) {
+/* separa a lista de itens de um dia em Manhã / Almoço / Tarde, pra ficar mais fácil de ler.
+   Itens "livre" não aparecem — só o horário real de cada atividade. */
+function renderTimelineWithPeriods(rawItems) {
+  const items = rawItems.filter(i => i.type !== 'livre');
   const lunchIdx = items.findIndex(i => i.type === 'almoco');
   const morning = lunchIdx === -1 ? items : items.slice(0, lunchIdx);
   const afternoon = lunchIdx === -1 ? [] : items.slice(lunchIdx + 1);
