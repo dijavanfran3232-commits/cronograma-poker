@@ -408,20 +408,21 @@ function livre(time, note) {
   1 sala de Simulado, sessões de 1h15 (25min rodízio + 25min debriefing + 25min rodízio),
   almoço fixo perto do meio-dia (11h45-12h45).
   8 sessões por dia (2 por grupo, todo dia) cabem exatas entre 8h e 19h nos Dias 2 e 3.
-  No Dia 1 também tem o Workshop (2h30 cada, sala separada em paralelo): com só 1 sala
-  de Workshop, cabe apenas 1 grupo antes do almoço — os outros 3 passam depois, o que
-  estende o Dia 1 até 20h15 (a sala de Workshop vira o gargalo do dia, não a de Simulado).
+  No Dia 1 também tem o Workshop (2h30 cada, sala separada em paralelo), come çando pelo
+  Grupo B logo de manhã (08:00-10:30). Depois dele só cabe 1 grupo por vez (ordem
+  B → D → C → A, a única ordem que encaixa sem ninguém bater com sua própria sessão de
+  Simulado), o que estende o Dia 1 até 21h30 — a sala de Workshop é o gargalo do dia.
 */
 const schedule = {
   A: [
     { day: 'Dia 1', date: '24/09', items: [
       simulado('08:00', 1),
-      livre('09:15–11:45', 'Grupos B e C na sala de Simulado'),
+      livre('09:15–11:45', 'Grupos C e D na sala de Simulado'),
       LUNCH,
-      livre('12:45–14:00', 'Grupo D na sala de Simulado'),
+      livre('12:45–14:00', 'Grupo B na sala de Simulado'),
       simulado('14:00', 2),
-      livre('15:15–17:45', 'Grupos B e C na sala de Simulado'),
-      workshop('17:45', 'Via Aérea'),
+      livre('15:15–19:00', 'Grupos C e D em atividade'),
+      workshop('19:00', 'Via Aérea'),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
       livre('08:00–11:45', 'Grupos B, C e D na sala de Simulado'),
