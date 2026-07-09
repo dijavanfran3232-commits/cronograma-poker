@@ -553,8 +553,8 @@ function renderLaneWithPeriods(events) {
   const afternoon = events.filter(ev => toMin(ev.time.split('–')[0]) >= cutoff);
   const row = ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`;
   let html = '';
-  if (morning.length) html += `<div class="period-title"><i class="ti ti-sun"></i>Manhã</div><div class="timeline">${morning.map(row).join('')}</div>`;
-  if (afternoon.length) html += `<div class="period-title"><i class="ti ti-sunset-2"></i>Tarde</div><div class="timeline">${afternoon.map(row).join('')}</div>`;
+  if (morning.length) html += `<div class="period-divider"><span><i class="ti ti-sun"></i>Manhã</span></div><div class="timeline">${morning.map(row).join('')}</div>`;
+  if (afternoon.length) html += `<div class="period-divider"><span><i class="ti ti-sunset-2"></i>Tarde</span></div><div class="timeline">${afternoon.map(row).join('')}</div>`;
   return html;
 }
 
