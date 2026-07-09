@@ -407,11 +407,8 @@ function livre(time, note) {
 /*
   1 sala de Simulado, sessões de 1h15 (25min rodízio + 25min debriefing + 25min rodízio),
   almoço fixo perto do meio-dia (11h45-12h45).
-  Dias 1 e 2 sempre terminam perto das 18h (7 sessões cada, o máximo que cabe até lá).
-  O grupo que "sobra" no fim do dia (não coube mais uma sessão) sempre abre o dia
-  seguinte, na ordem certa de bloco — por isso o Grupo D fecha o Dia 1 com só o Bloco 1
-  e abre o Dia 2 com o Bloco 2. Como 24 sessões não cabem em 2 dias de ~18h, o que sobra
-  (10 sessões) vai todo pro Dia 3, que aí sim pode se estender (até 21h30).
+  8 sessões por dia (2 por grupo, todo dia) cabem exatas entre 8h e 19h — por isso os
+  3 dias terminam sempre às 19h, sem nenhum grupo precisando compensar em outro dia.
   Dia 1 acumula o Workshop (sala separada, em paralelo) logo após a 1ª sessão de cada grupo.
 */
 const schedule = {
@@ -419,20 +416,18 @@ const schedule = {
     { day: 'Dia 1', date: '24/09', items: [
       simulado('08:00', 1),
       workshop('09:15'),
-      livre('10:30–11:45', 'Grupos B e C na sala de Simulado'),
+      livre('10:30–11:45', 'Grupo C na sala de Simulado'),
       LUNCH,
       livre('12:45–14:00', 'Grupo D na sala de Simulado'),
       simulado('14:00', 2),
-      livre('15:15–17:45', 'Grupos B e C na sala de Simulado — dia encerra às 17h45'),
+      livre('15:15–19:00', 'Grupos B, C e D na sala de Simulado — dia encerra às 19h'),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
-      livre('08:00–09:15', 'Grupo D na sala de Simulado'),
-      simulado('09:15', 3),
-      livre('10:30–11:45', 'Grupo B na sala de Simulado'),
+      livre('08:00–11:45', 'Grupos B, C e D na sala de Simulado'),
       LUNCH,
-      livre('12:45–15:15', 'Grupos C e D na sala de Simulado'),
-      simulado('15:15', 4),
-      livre('16:30–17:45', 'Grupo B na sala de Simulado — dia encerra às 17h45'),
+      simulado('12:45', 3),
+      livre('14:00–17:45', 'Grupos B, C e D na sala de Simulado'),
+      simulado('17:45', 4),
     ]},
     { day: 'Dia 3', date: '26/09', items: [
       livre('08:00–10:30', 'Grupos C e D na sala de Simulado'),
@@ -440,7 +435,7 @@ const schedule = {
       LUNCH,
       livre('12:45–16:30', 'Grupos B, C e D na sala de Simulado'),
       simulado('16:30', 6),
-      livre('17:45–21:30', 'Grupos B, C e D na sala de Simulado — dia encerra às 21h30'),
+      livre('17:45–19:00', 'Grupo B na sala de Simulado — dia encerra às 19h'),
     ]},
   ],
   B: [
@@ -451,14 +446,15 @@ const schedule = {
       LUNCH,
       livre('12:45–15:15', 'Grupos D e A na sala de Simulado'),
       simulado('15:15', 2),
-      livre('16:30–17:45', 'Grupo C na sala de Simulado — dia encerra às 17h45'),
+      livre('16:30–19:00', 'Grupos C e D na sala de Simulado — dia encerra às 19h'),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
-      livre('08:00–10:30', 'Grupos D e A na sala de Simulado'),
-      simulado('10:30', 3),
+      simulado('08:00', 3),
+      livre('09:15–11:45', 'Grupos C e D na sala de Simulado'),
       LUNCH,
-      livre('12:45–16:30', 'Grupos C, D e A na sala de Simulado'),
-      simulado('16:30', 4),
+      livre('12:45–14:00', 'Grupo A na sala de Simulado'),
+      simulado('14:00', 4),
+      livre('15:15–19:00', 'Grupos C, D e A na sala de Simulado — dia encerra às 19h'),
     ]},
     { day: 'Dia 3', date: '26/09', items: [
       livre('08:00–11:45', 'Grupos C, D e A na sala de Simulado'),
@@ -466,7 +462,6 @@ const schedule = {
       simulado('12:45', 5),
       livre('14:00–17:45', 'Grupos C, D e A na sala de Simulado'),
       simulado('17:45', 6),
-      livre('19:00–21:30', 'Grupos C e D na sala de Simulado — dia encerra às 21h30'),
     ]},
   ],
   C: [
@@ -477,21 +472,24 @@ const schedule = {
       workshop('12:45'),
       livre('14:00–16:30', 'Grupo D, depois A e B, na sala de Simulado'),
       simulado('16:30', 2),
+      livre('17:45–19:00', 'Grupo D na sala de Simulado — dia encerra às 19h'),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
-      livre('08:00–11:45', 'Grupos D, A e B na sala de Simulado'),
+      livre('08:00–09:15', 'Grupo B na sala de Simulado'),
+      simulado('09:15', 3),
+      livre('10:30–11:45', 'Grupo D na sala de Simulado'),
       LUNCH,
-      simulado('12:45', 3),
-      livre('14:00–17:45', 'Grupos D, A e B na sala de Simulado — dia encerra às 17h45'),
+      livre('12:45–15:15', 'Grupos A e B na sala de Simulado'),
+      simulado('15:15', 4),
+      livre('16:30–19:00', 'Grupos D e A na sala de Simulado — dia encerra às 19h'),
     ]},
     { day: 'Dia 3', date: '26/09', items: [
-      simulado('08:00', 4),
+      simulado('08:00', 5),
       livre('09:15–11:45', 'Grupos D e A na sala de Simulado'),
       LUNCH,
       livre('12:45–14:00', 'Grupo B na sala de Simulado'),
-      simulado('14:00', 5),
-      livre('15:15–19:00', 'Grupos D, A e B na sala de Simulado'),
-      simulado('19:00', 6),
+      simulado('14:00', 6),
+      livre('15:15–19:00', 'Grupos D, A e B na sala de Simulado — dia encerra às 19h'),
     ]},
   ],
   D: [
@@ -500,25 +498,25 @@ const schedule = {
       LUNCH,
       simulado('12:45', 1),
       workshop('14:00'),
-      livre('15:15–17:45', 'Grupos A, B e C na sala de Simulado — dia encerra às 17h45'),
+      livre('15:15–17:45', 'Grupos A, B e C na sala de Simulado'),
+      simulado('17:45', 2),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
-      simulado('08:00', 2),
-      livre('09:15–11:45', 'Grupos A e B na sala de Simulado'),
+      livre('08:00–10:30', 'Grupos B e C na sala de Simulado'),
+      simulado('10:30', 3),
       LUNCH,
-      livre('12:45–14:00', 'Grupo C na sala de Simulado'),
-      simulado('14:00', 3),
-      livre('15:15–17:45', 'Grupos A e B na sala de Simulado — dia encerra às 17h45'),
+      livre('12:45–16:30', 'Grupos A, B e C na sala de Simulado'),
+      simulado('16:30', 4),
+      livre('17:45–19:00', 'Grupo A na sala de Simulado — dia encerra às 19h'),
     ]},
     { day: 'Dia 3', date: '26/09', items: [
       livre('08:00–09:15', 'Grupo C na sala de Simulado'),
-      simulado('09:15', 4),
+      simulado('09:15', 5),
       livre('10:30–11:45', 'Grupo A na sala de Simulado'),
       LUNCH,
       livre('12:45–15:15', 'Grupos B e C na sala de Simulado'),
-      simulado('15:15', 5),
-      livre('16:30–20:15', 'Grupos A, B e C na sala de Simulado'),
-      simulado('20:15', 6),
+      simulado('15:15', 6),
+      livre('16:30–19:00', 'Grupos A e B na sala de Simulado — dia encerra às 19h'),
     ]},
   ],
 };
