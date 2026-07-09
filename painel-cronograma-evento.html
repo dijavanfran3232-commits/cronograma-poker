@@ -618,12 +618,12 @@ function renderDayOverview() {
   const workshopLane = workshopEvents.length
     ? `<div class="overview-section">
         <div class="overview-lane-title"><i class="ti ti-presentation"></i> Sala Workshop</div>
-        <div class="timeline">${workshopEvents.map(ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`).join('')}</div>
+        ${renderLaneWithPeriods(workshopEvents)}
       </div>`
     : '';
   const simuladoLane = `<div class="overview-section">
       <div class="overview-lane-title"><i class="ti ti-stethoscope"></i> Sala Simulado</div>
-      <div class="timeline">${simuladoEvents.map(ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`).join('')}</div>
+      ${renderLaneWithPeriods(simuladoEvents)}
     </div>`;
   const lunchLane = `<div class="overview-section">
       <div class="overview-lane-title"><i class="ti ti-coffee"></i> Almoço — todos os grupos</div>
