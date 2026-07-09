@@ -170,6 +170,31 @@
     .day-view-grid { grid-template-columns: 1fr; }
   }
 
+  /* ─── DIVISOR ÚNICO MANHÃ/TARDE (largura total, entre as duas grades) ─── */
+  .full-period-divider {
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    margin: 6px 0 20px;
+  }
+  .full-period-divider::before {
+    content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1px;
+    background: rgba(var(--ink),0.16); z-index: 0;
+  }
+  .full-period-divider span {
+    position: relative; z-index: 1;
+    background: var(--page-bg);
+    padding: 5px 16px;
+    border-radius: 999px;
+    font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+    color: rgba(var(--ink),0.55);
+    display: flex; align-items: center; gap: 7px;
+  }
+  .full-period-divider .full-period-lunch {
+    background: rgba(255,180,69,0.14);
+    border: 1px solid rgba(255,180,69,0.3);
+    color: #ffcb85;
+  }
+
   /* ─── GROUP SELECTOR ─── */
   .group-selector { display: flex; gap: 10px; margin-bottom: 1.6rem; flex-wrap: wrap; }
   .group-btn {
