@@ -573,18 +573,6 @@ function renderTimelineWithPeriods(rawItems) {
   return html;
 }
 
-/* mesma ideia, mas pra listas "achatadas" de eventos de uma sala (Visão Geral), sem item de almoço misturado */
-function renderLaneWithPeriods(events) {
-  const cutoff = toMin('12:00');
-  const morning = events.filter(ev => toMin(ev.time.split('–')[0]) < cutoff);
-  const afternoon = events.filter(ev => toMin(ev.time.split('–')[0]) >= cutoff);
-  const row = ev => `<div class="grp-${ev.group}">${renderItem(ev, ev.group)}</div>`;
-  let html = '';
-  if (morning.length) html += `<div class="period-divider"><span><i class="ti ti-sun"></i>Manhã</span></div><div class="timeline">${morning.map(row).join('')}</div>`;
-  if (afternoon.length) html += `<div class="period-divider"><span><i class="ti ti-sunset-2"></i>Tarde</span></div><div class="timeline">${afternoon.map(row).join('')}</div>`;
-  return html;
-}
-
 function renderDays() {
   const el = document.getElementById('days-container');
   el.innerHTML = schedule[currentGroup].map(day => `
