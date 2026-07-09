@@ -601,8 +601,10 @@ function renderDays() {
   `).join('');
 }
 
-/* divide os itens de um grupo/dia em manhã e tarde, usando o item de almoço como corte */
-function splitDayItems(items) {
+/* divide os itens de um grupo/dia em manhã e tarde, usando o item de almoço como corte.
+   Itens "livre" não aparecem — só o horário real de cada atividade. */
+function splitDayItems(rawItems) {
+  const items = rawItems.filter(i => i.type !== 'livre');
   const lunchIdx = items.findIndex(i => i.type === 'almoco');
   const morning = lunchIdx === -1 ? items : items.slice(0, lunchIdx);
   const afternoon = lunchIdx === -1 ? [] : items.slice(lunchIdx + 1);
