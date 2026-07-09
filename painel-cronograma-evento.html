@@ -382,8 +382,8 @@ function range(hhmm, mins) { return `${hhmm}–${addMin(hhmm, mins)}`; }
 
 const LUNCH = { time: '11:45–12:45', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
 
-function workshop(start) {
-  return { time: range(start, 75), type: 'workshop', title: 'Workshop' };
+function workshop(start, topic) {
+  return { time: range(start, 75), type: 'workshop', title: topic ? `Workshop — ${topic}` : 'Workshop' };
 }
 
 /* simulado = 1 bloco só, tentado 2x (1ª tentativa -> debriefing -> 2ª tentativa, mesmo bloco).
