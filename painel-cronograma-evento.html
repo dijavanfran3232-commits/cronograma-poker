@@ -475,12 +475,15 @@ const schedule = {
   ],
   C: [
     { day: 'Dia 1', date: '24/09', items: [
-      workshop('08:00', 'Via Aérea'),
+      workshopPart('08:00', 'POCUS', 1),
+      livre('09:15–10:30'),
       simulado('10:30', 1),
       LUNCH,
-      livre('12:45–14:00', 'Grupo B na sala de Simulado'),
-      simulado('14:00', 2),
-      livre('15:15–19:00', 'Grupos A, D e B em atividade — dia encerra às 19h'),
+      workshopPart('12:45', 'Via Aérea', 1),
+      workshopPart('14:00', 'POCUS', 2),
+      livre('15:15–16:30'),
+      simulado('16:30', 2),
+      workshopPart('17:45', 'Via Aérea', 2),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
       livre('08:00–09:15', 'Grupo B na sala de Simulado'),
