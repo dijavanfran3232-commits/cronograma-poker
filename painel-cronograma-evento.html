@@ -414,9 +414,10 @@ function livre(time, note) {
   almoço fixo perto do meio-dia (11h45-12h45).
   8 sessões por dia (2 por grupo, todo dia) cabem exatas entre 8h e 19h.
   No Dia 1, Simulado, Via Aérea, POCUS e Livre rodam em paralelo — 1 grupo em cada,
-  ao mesmo tempo, trocando de estação a cada 1h15. Em 8 rodadas (3 antes do almoço,
-  5 depois) cada grupo passa 2x por cada estação: os 2 blocos de Simulado, as 2 partes
-  de Via Aérea, as 2 partes de POCUS e 2 rodadas livres. Dia 1 termina às 19h.
+  ao mesmo tempo, trocando de estação a cada 1h15. Em 8 rodadas (4 antes do almoço,
+  4 depois — almoço 13h-14h) cada grupo passa 2x por cada estação: os 2 blocos de
+  Simulado, as 2 partes de Via Aérea, as 2 partes de POCUS e 2 rodadas livres.
+  Dia 1 termina às 19h.
 */
 const schedule = {
   A: [
@@ -424,8 +425,8 @@ const schedule = {
       simulado('08:00', 1),
       workshopPart('09:15', 'Via Aérea', 1),
       workshopPart('10:30', 'POCUS', 1),
-      LUNCH,
-      livre('12:45–14:00'),
+      livre('11:45–13:00'),
+      LUNCH_DAY1,
       simulado('14:00', 2),
       workshopPart('15:15', 'Via Aérea', 2),
       workshopPart('16:30', 'POCUS', 2),
