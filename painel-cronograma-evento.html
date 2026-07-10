@@ -411,21 +411,23 @@ function livre(time, note) {
   1 sala de Simulado, sessões de 1h15 (25min rodízio + 25min debriefing + 25min rodízio),
   almoço fixo perto do meio-dia (11h45-12h45).
   8 sessões por dia (2 por grupo, todo dia) cabem exatas entre 8h e 19h.
-  No Dia 1 também tem o Workshop (2h30, dividido em 2 partes de 1h15): B e C fazem Via
-  Aérea juntos, ao mesmo tempo, já começando às 8h (08:00-10:30); A e D fazem POCUS
-  juntos, ao mesmo tempo, logo depois do almoço (12:45-15:15). A sala de Simulado se
-  organiza ao redor disso pra ninguém bater horário — tudo cabe certinho e o Dia 1
-  termina às 19h, igual aos outros dias.
+  No Dia 1, Simulado, Via Aérea, POCUS e Livre rodam em paralelo — 1 grupo em cada,
+  ao mesmo tempo, trocando de estação a cada 1h15. Em 8 rodadas (3 antes do almoço,
+  5 depois) cada grupo passa 2x por cada estação: os 2 blocos de Simulado, as 2 partes
+  de Via Aérea, as 2 partes de POCUS e 2 rodadas livres. Dia 1 termina às 19h.
 */
 const schedule = {
   A: [
     { day: 'Dia 1', date: '24/09', items: [
       simulado('08:00', 1),
-      livre('09:15–11:45', 'Grupos D e C na sala de Simulado'),
+      workshopPart('09:15', 'Via Aérea', 1),
+      workshopPart('10:30', 'POCUS', 1),
       LUNCH,
-      workshop('12:45', 'POCUS'),
-      simulado('15:15', 2),
-      livre('16:30–19:00', 'Grupos D e B na sala de Simulado — dia encerra às 19h'),
+      livre('12:45–14:00'),
+      simulado('14:00', 2),
+      workshopPart('15:15', 'Via Aérea', 2),
+      workshopPart('16:30', 'POCUS', 2),
+      livre('17:45–19:00', 'Dia encerra às 19h'),
     ]},
     { day: 'Dia 2', date: '25/09', items: [
       livre('08:00–11:45', 'Grupos B, C e D na sala de Simulado'),
