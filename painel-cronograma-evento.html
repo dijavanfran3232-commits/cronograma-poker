@@ -381,6 +381,8 @@ function addMin(hhmm, mins) { return toHHMM(toMin(hhmm)+mins); }
 function range(hhmm, mins) { return `${hhmm}–${addMin(hhmm, mins)}`; }
 
 const LUNCH = { time: '11:45–12:45', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
+/* só o Dia 1 usa esse horário de almoço (13h-14h), por causa do rodízio de 4 estações */
+const LUNCH_DAY1 = { time: '13:00–14:00', type: 'almoco', title: 'Almoço', icon: 'ti-coffee' };
 
 /* workshop = 2h30 no total, mas cada grupo visita em 2 rodadas separadas de 1h15
    (Parte 1 e Parte 2), já que agora Simulado, Via Aérea, POCUS e Livre rodam em
